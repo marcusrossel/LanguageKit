@@ -17,7 +17,8 @@ public protocol LKVocableStyleType: Hashable {
 // MARK: - Protocol Conformances
 
 public extension LKVocableStyleType {
-    /// Custom implemention of this property should be avoided, as it might cause disproportionate hash collisions
+    /// Custom implemention of this property should be avoided, as it might
+    /// cause disproportionate hash collisions
     public var hashValue: Int {
         return description.hashValue
     }
@@ -25,7 +26,8 @@ public extension LKVocableStyleType {
 
 // MARK: - Operator
 
-/// `LKVocableStyleType`'s with the same `description` should have the same purpose, and are therefore considered equal
+/// `LKVocableStyleType`'s with the same `description` should have the same
+/// purpose, and are therefore considered equal
 @warn_unused_result
 public func ==<T: LKVocableStyleType>(left: T, right: T) -> Bool {
     return left.description == right.description
@@ -39,7 +41,8 @@ public func ==<T: LKVocableStyleType>(left: T, right: T) -> Bool {
 public struct LKAnyVocableStyle: LKVocableStyleType {
     public private(set) var description: String
 
-    /// A custom implementation of `hashValue` is used to reduce potential hash collisions with other types (as this type is only a wrapper)
+    /// A custom implementation of `hashValue` is used to reduce potential hash
+    /// collisions with other types (as this type is only a wrapper)
     public var hashValue: Int {
         return "LKAnyVocableStyle - \(description)".hashValue
     }
@@ -55,7 +58,8 @@ public struct LKAnyVocableStyle: LKVocableStyleType {
 
 /// Simple structure conforming to the base requirements of `LKVocableStyleType`
 ///
-/// All properties are implemented as constants, as this type is meant to be used like a pure value
+/// All properties are implemented as constants, as this type is meant to be
+/// used like a pure value
 public struct LKVocableStyle: LKVocableStyleType {
     public let description: String
 }

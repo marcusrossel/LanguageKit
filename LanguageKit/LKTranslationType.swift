@@ -26,7 +26,8 @@ public extension LKTranslationType {
 // MARK: - Protocol Conformances
 
 public extension LKTranslationType {
-    /// Custom implemention of this property should be avoided, as it might cause disproportionate hash collisions
+    /// Custom implemention of this property should be avoided, as it might
+    /// cause disproportionate hash collisions
     var hashValue: Int {
         return "\(languages.original)\(languages.translations)\(original)\(translations.sort())".hashValue
     }
@@ -57,7 +58,8 @@ public struct LKAnyTranslation: LKTranslationType {
     public var translations: Set<String>
     public var context: String?
 
-    /// A custom implementation of `hashValue` is used to reduce potential hash collisions with other types (as this type is only a wrapper)
+    /// A custom implementation of `hashValue` is used to reduce potential
+    /// hash collisions with other types (as this type is only a wrapper)
     public var hashValue: Int {
         return "LKAnyTranslation - \(languages.original)\(languages.translations)\(original)\(translations.sort()))".hashValue
     }
@@ -73,7 +75,8 @@ public struct LKAnyTranslation: LKTranslationType {
 
 /// Simple structure conforming to the base requirements of `LKVocableStyleType`
 ///
-/// All properties are implemented as constants, as this type is meant to be used like a pure value
+/// All properties are implemented as constants, as this type is meant to
+/// be used like a pure value
 public struct LKTranslation: LKTranslationType {
     public let languages: (original: LKAnyLanguage, translations: LKAnyLanguage)
     public let original: String

@@ -10,7 +10,8 @@
 
 // MARK: - LKLexicon
 
-/// A native `LanguageKit` type which allows `LKVocable`s to be used collectively
+/// A native `LanguageKit` type which allows `LKVocableType`s to be used
+/// collectively
 public struct LKLexicon<V: LKVocableType where V: Hashable> {
     // MARK: - Private Storage
 
@@ -28,7 +29,8 @@ public struct LKLexicon<V: LKVocableType where V: Hashable> {
 
     public subscript(vocableStyle: LKAnyVocableStyle) -> LKLexicon {
         get {
-            return LKLexicon(vocables: _storage.filter { vocable in vocable.style == vocableStyle })
+            let vocables = Set(_storage.filter { $0.style == vocableStyle })
+            return LKLexicon(vocables: vocables)
         }
     }
 
