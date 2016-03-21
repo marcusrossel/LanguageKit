@@ -67,10 +67,17 @@ public struct LKVocable: LKVocableType {
 
     // MARK: - Initialization
 
-    public init<VS: LKVocableStyleType, L: LKLanguageType>(style: VS, translations: [L: Set<String>] = [:], context: [L: String] = [:]) {
+    public init<VS: LKVocableStyleType, L: LKLanguageType>
+        (style: VS, translations: [L: Set<String>] = [:],
+         context: [L: String] = [:]) {
         self.style = LKAnyVocableStyle(style)
-        translations.forEach { language, set in self.translations[LKAnyLanguage(language)] = set }
-        context.forEach { language, string in self.context[LKAnyLanguage(language)] = string }
+        translations.forEach {
+            language, set in self.translations[LKAnyLanguage(language)] = set
+        }
+
+        context.forEach {
+            language, string in self.context[LKAnyLanguage(language)] = string
+        }
     }
 
     public init(vocableType: LKVocableType) {
@@ -98,7 +105,11 @@ extension LKVocable: Hashable {
         
         let sortedContextValues = Array(context.values).sort()
 
-        return "\(style.description)\(sortedLanguages)\(sortedSets)\(sortedContextKeys)\(sortedContextValues)".hashValue
+        let combinedString = "\(style.description)\(sortedLanguages)" +
+                             "\(sortedSets)\(sortedContextKeys)" +
+                             "\(sortedContextValues)"
+
+        return combinedString.hashValue
     }
 }
 
@@ -111,6 +122,6 @@ public func ==(left: LKVocable, right: LKVocable) -> Bool {
     // return (left.translations, left.style, left.context) == (right.translations, right.style, right.context)
 
     return left.translations == right.translations &&
-        left.style        == right.style &&
-        left.context      == right.context
+           left.style        == right.style &&
+           left.context      == right.context
 }

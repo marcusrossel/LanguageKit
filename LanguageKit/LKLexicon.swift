@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-
-
 // MARK: - LKLexicon
 
 /// A native `LanguageKit` type which allows `LKVocableType`s to be used
@@ -28,28 +26,26 @@ public struct LKLexicon<V: LKVocableType where V: Hashable> {
     }
 
     public subscript(vocableStyle: LKAnyVocableStyle) -> LKLexicon {
-        get {
-            let vocables = Set(_storage.filter { $0.style == vocableStyle })
-            return LKLexicon(vocables: vocables)
-        }
+        return LKLexicon(vocables: _storage.filter { $0.style == vocableStyle })
     }
 
     public subscript(originalLanguage: LKAnyLanguage, translationLanguage: LKAnyLanguage) -> Set<LKAnyTranslation> {
-        get {
-            let originalsAndTranslationsAndContext = _storage.map { vocable in
-                (vocable.translations[originalLanguage] ?? [], vocable.translations[translationLanguage] ?? [], vocable.context[originalLanguage])
-            }
-
-            let translations = originalsAndTranslationsAndContext.map { (originals, translations, context) in
-                originals.map {
-                    LKAnyTranslation(LKTranslation(languages: (originalLanguage, translationLanguage), original: $0, translations: translations, context: context))
-                }
-            }
-            
-            let flatTranslations = translations.flatMap { $0 }
-
-            return Set(flatTranslations)
+        let originalsAndTranslationsAndContext = _storage.map { vocable in
+            (vocable.translations[originalLanguage] ?? [],
+                vocable.translations[translationLanguage] ?? [],
+                vocable.context[originalLanguage])
         }
+
+        let translations = originalsAndTranslationsAndContext.map {
+            (originals, translations, context) in
+            originals.map {
+                LKAnyTranslation(LKTranslation(languages: (originalLanguage, translationLanguage), original: $0, translations: translations, context: context))
+            }
+        }
+
+        let flatTranslations = translations.flatMap { $0 }
+
+        return Set(flatTranslations)
     }
 
     // MARK: - Initialization

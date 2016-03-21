@@ -29,7 +29,7 @@ public extension LKTranslationType {
     /// Custom implemention of this property should be avoided, as it might
     /// cause disproportionate hash collisions
     var hashValue: Int {
-        return "\(languages.original)\(languages.translations)\(original)\(translations.sort())".hashValue
+        return "\(languages)\(original)\(translations.sort())".hashValue
     }
 }
 

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-
-
 // MARK: - LKLanguageType
 
 public protocol LKLanguageType: Hashable {
