@@ -64,8 +64,11 @@ public struct LKAnyTranslation: LKTranslationType {
         return "LKAnyTranslation - \(languages.original)\(languages.translations)\(original)\(translations.sort()))".hashValue
     }
 
-    public init<T: LKTranslationType>(_ translated: T) {
-        (languages, original, translations) = (translated.languages, translated.original, translated.translations)
+    public init<T: LKTranslationType>(_ translation: T) {
+        languages = translation.languages
+        original = translation.original
+        translations = translation.translations
+        context = translation.context
     }
 }
 
