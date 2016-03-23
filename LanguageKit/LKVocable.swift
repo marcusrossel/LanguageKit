@@ -114,12 +114,8 @@ extension LKVocable: Hashable {
 // MARK: - Operator
 
 @warn_unused_result
-public func ==(left: LKVocable, right: LKVocable) -> Bool {
-    // use newly added tuple-comparison:
-    //
-    // return (left.translations, left.style, left.context) == (right.translations, right.style, right.context)
-
-    return left.translations == right.translations &&
-           left.style        == right.style &&
-           left.context      == right.context
+public func ==(lhs: LKVocable, rhs: LKVocable) -> Bool {
+    return lhs.translations == rhs.translations &&
+           lhs.style        == rhs.style &&
+           lhs.context      == rhs.context
 }

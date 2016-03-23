@@ -34,15 +34,9 @@ public extension LKTranslationType {
 // MARK: - Operator
 
 @warn_unused_result
-public func ==<T: LKTranslationType>(left: T, right: T) -> Bool {
-    // use newly added tuple-comparison:
-    //
-    // return (left.languages, left.original, left.translations) == (right.languages, right.original, right.translations)
-
-    return left.languages.original == right.languages.original &&
-        left.languages.translations == right.languages.translations &&
-        left.original == right.original &&
-        left.translations == right.translations
+public func ==<T: LKTranslationType>(lhs: T, rhs: T) -> Bool {
+    return lhs.languages == rhs.languages &&
+          (lhs.original, lhs.translations) == (rhs.original, rhs.translations)
 }
 
 
