@@ -6,32 +6,7 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-// MARK: - LKTranslatable
-
-public protocol LKTranslatable {
-    var translations: [LKAnyLanguage: Set<String>] { get set }
-}
-
-
-
-// MARK: - LKVocableType
-
-public protocol LKVocableType: LKTranslatable {
-    var style: LKAnyVocableStyle { get set }
-    var context: [LKAnyLanguage: String] { get set }
-}
-
-extension LKVocableType {
-    var context: [LKAnyLanguage: String] {
-        return [:]
-    }
-}
-
-
-
-// MARK: - LKVocable
-
-/// The native `LanguageKit` vocable type
+/// The native `LanguageKit` vocable type.
 public struct LKVocable: LKVocableType {
 
     // MARK: - Nested Types

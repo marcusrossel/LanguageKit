@@ -6,16 +6,11 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-// MARK: - LKLexicon
-
-/// A native `LanguageKit` type which allows `LKVocableType`s to be used
-/// collectively
+/// A native `LanguageKit` type which allows types conforming to `LKVocableType`
+/// to be used collectively.
 public struct LKLexicon<V: LKVocableType where V: Hashable> {
-    // MARK: - Private Storage
 
     private var _storage: Set<V> = []
-
-    // MARK: - Public Methods
 
     public mutating func insertVocable(vocable: V) {
         _storage.insert(vocable)
@@ -48,14 +43,10 @@ public struct LKLexicon<V: LKVocableType where V: Hashable> {
         return Set(flatTranslations)
     }
 
-    // MARK: - Initialization
-
     public init<S: SequenceType where S.Generator.Element == V>(vocables: S) {
         _storage = Set(vocables)
     }
 }
-
-// MARK: - Protocol Conformances
 
 extension LKLexicon: ArrayLiteralConvertible {
     public init(arrayLiteral elements: V...) {
@@ -69,9 +60,7 @@ extension LKLexicon: Hashable {
     }
 }
 
-// MARK: - Operator
-
 @warn_unused_result
-public func ==<V>(left: LKLexicon<V>, right: LKLexicon<V>) -> Bool {
-    return left._storage == right._storage
+public func ==<V>(lhs: LKLexicon<V>, rhs: LKLexicon<V>) -> Bool {
+    return lhs._storage == rhs._storage
 }
