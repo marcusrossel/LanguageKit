@@ -6,6 +6,8 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
+import Foundation
+
 /// The native `LanguageKit` vocable type.
 public struct LKVocable: LKVocableType {
 
