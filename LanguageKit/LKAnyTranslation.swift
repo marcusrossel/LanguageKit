@@ -10,21 +10,22 @@ import Foundation
 
 /// A type-erasing wrapper for `LKTranslationType`.
 public struct LKAnyTranslation: LKTranslationType {
-    public var languages: (original: LKAnyLanguage, translations: LKAnyLanguage)
+    public var languages: (original: LKAnyLanguage, derived: LKAnyLanguage)
     public var original: String
-    public var translations: Set<String>
+    public var derived: Set<String>
     public var context: String?
 
     /// A custom implementation of `hashValue` is used to reduce potential
-    /// hash collisions with other types (as this type is only a wrapper)
+    /// hash collisions with other types (as this type is only a wrapper).
     public var hashValue: Int {
-        return "LKAnyTranslation - \(languages.original)\(languages.translations)\(original)\(translations.sort()))".hashValue
+        let propertiesString = "LKAnyTranslation - \(languages)\(original)\(derived.sort())\(context)"
+        return propertiesString.hashValue
     }
 
     public init<T: LKTranslationType>(_ translation: T) {
         languages = translation.languages
         original = translation.original
-        translations = translation.translations
+        derived = translation.derived
         context = translation.context
     }
 }

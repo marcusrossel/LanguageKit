@@ -8,11 +8,17 @@
 
 import Foundation
 
+/// A protocol representing types, that can be used as a vocable - supplying all
+/// the functionality that entails.
 public protocol LKVocableType: LKTranslatable {
-    var style: LKAnyVocableStyle { get set }
-    var context: [LKAnyLanguage: String] { get set }
+    var style: LKAnyVocableStyle { get }
+
+    /// Use this property to store additional information about a vocable.
+    var context: [LKAnyLanguage: String] { get }
 }
 
 extension LKVocableType {
+    /// `LKVocableType`'s `context` is somewhat optional.
+    /// This default makes it easier to ignore.
     var context: [LKAnyLanguage: String] { return [:] }
 }

@@ -8,91 +8,100 @@
 
 import Foundation
 
-/// The native `LanguageKit` vocable type.
+/// The native *LanguageKit* vocable type.
 public struct LKVocable: LKVocableType {
-
-    // MARK: - Nested Types
-
-    /// Nested `LKVocableStyleType` which can be used for convenience
+    /// An embedded `LKVocableStyleType` which can be used for convenience.
     public enum Style: String, LKVocableStyleType {
         case Word
         case Phrase
-
-        public var description: String {
-            return "\(self)"
-        }
+        public var qualifier: String { return "\(self)" }
     }
 
-    // MARK: - Properties
-
+    public var languageWordPool: [LKAnyLanguage: Set<String>] = [:]
     public var style: LKAnyVocableStyle
-    public var translations: [LKAnyLanguage: Set<String>] = [:]
-
-    /// Use this property to store additional information about the vocable
     public var context: [LKAnyLanguage: String] = [:]
 
-    // MARK: - Subscripts
-
-    /// This subscript gives direct access to `VLKocable`'s `translations`
-    /// property
+    /// This subscript gives direct access to `LKVocable`'s `languageWordPool`
+    /// dictionary.
     public subscript(language: LKAnyLanguage) -> Set<String>? {
-        get { return translations[language] }
-        set { translations[language] = newValue }
+        get { return languageWordPool[language] }
+        set { languageWordPool[language] = newValue }
     }
 
-    // MARK: - Initialization
+    /// If the `original` language is not found in `languageWordPool`, an empty
+    /// array is returned.  
+    /// If the `derived` language is not found in `languageWordPool`,
+    /// `LKAnyTranslation`s with an empty `Set` for `derived` will be returned.
+    public subscript(original oLang: LKAnyLanguage, derived dLang: LKAnyLanguage) -> [LKAnyTranslation] {
+        guard let originals = languageWordPool[oLang] else { return [] }
+        guard !originals.isEmpty else { return [] }
 
-    public init<VS: LKVocableStyleType, L: LKLanguageType>
-        (style: VS, translations: [L: Set<String>] = [:],
-         context: [L: String] = [:]) {
+        let translations: [LKTranslation] = originals.map { original in
+            let derivedStrings = languageWordPool[dLang] ?? []
+            let contextString = context[oLang]
+
+            return LKTranslation(languages: (oLang, dLang),
+                                 original: original,
+                                 derived: derivedStrings,
+                                 context: contextString)
+        }
+
+        let anyTranslations = translations.map(LKAnyTranslation.init)
+        return anyTranslations
+    }
+
+    public init<VST: LKVocableStyleType, LT: LKLanguageType>(style: VST, languageWordPool: [LT: Set<String>] = [:], context: [LT: String] = [:]) {
         self.style = LKAnyVocableStyle(style)
-        translations.forEach {
-            language, set in self.translations[LKAnyLanguage(language)] = set
-        }
 
-        context.forEach {
-            language, string in self.context[LKAnyLanguage(language)] = string
+        // If `LT` is `LKAnyLanguage`, the computationally intensive key-mapping
+        // can be skipped.
+        if LT == LKAnyLanguage {
+            self.languageWordPool = languageWordPool
+            self.context = context
+        } else {
+            let mappedPool = languageWordPool.mapKeys(LKAnyLanguage.init)
+            self.languageWordPool = mappedPool
+
+            let mappedContext = context.mapKeys(LKAnyLanguage.init)
+            self.context = mappedContext
         }
     }
 
-    public init(vocableType: LKVocableType) {
-        self.style = vocableType.style
-        self.translations = vocableType.translations
+    public init<T: LKVocableType>(vocableType: T) {
+        style = vocableType.style
+        languageWordPool = vocableType.languageWordPool
+        context = vocableType.context
     }
 }
 
-// MARK: - Protocol Conformances
-
+/// TODO: Fix this
+/*
 extension LKVocable: Hashable {
     public var hashValue: Int {
         // dictionary key- and value-sorting is needed to ensure stable hash
         // values across multiple calls
 
-        let sortedLanguages = Array(translations.keys).sort {
-            $0.description < $1.description
+        let sortedLanguages = Array(languageWordPool.keys).sort {
+            $0.identifier < $1.identifier
         }
 
-        let sortedSets = Array(translations.values).flatMap { $0 }.sort()
+        let sortedSets = Array(languageWordPool.values).flatMap { $0 }.sort()
 
         let sortedContextKeys = Array(context.keys).sort {
-            $0.description < $1.description
+            $0.identifier < $1.identifier
         }
         
         let sortedContextValues = Array(context.values).sort()
 
-        let combinedString = "\(style.description)\(sortedLanguages)" +
-                             "\(sortedSets)\(sortedContextKeys)" +
-                             "\(sortedContextValues)"
+        let combinedString = "\(style.qualifier)\(sortedLanguages)\(sortedSets)\(sortedContextKeys)\(sortedContextValues)"
 
-        return combinedString.hashValue
+        return combinedString.hashValue*
     }
-}
-
-// MARK: - Operator
+}*/
 
 @warn_unused_result
-public func ==(lhs: LKVocable, rhs: LKVocable) -> Bool {
-    return lhs.translations == rhs.translations &&
-           lhs.style        == rhs.style &&
-           lhs.context      == rhs.context
+public func ==<T: LKVocableType>(lhs: T, rhs: T) -> Bool {
+    return lhs.languageWordPool == rhs.languageWordPool &&
+           lhs.style            == rhs.style            &&
+           lhs.context          == rhs.context
 }

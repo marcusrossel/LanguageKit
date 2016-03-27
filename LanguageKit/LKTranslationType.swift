@@ -9,27 +9,27 @@
 import Foundation
 
 public protocol LKTranslationType: Hashable {
-    var languages: (original: LKAnyLanguage, translations: LKAnyLanguage) { get }
+    var languages: (original: LKAnyLanguage, derived: LKAnyLanguage) { get }
     var original: String { get }
-    var translations: Set<String> { get }
+    var derived: Set<String> { get }
     var context: String? { get }
 }
 
 public extension LKTranslationType {
-    var context: String?  {
-        return nil
-    }
+    var context: String?  { return nil }
 
     /// Custom implemention of this property should be avoided, as it might
     /// cause disproportionate hash collisions.
     var hashValue: Int {
-        return "\(languages)\(original)\(translations.sort())".hashValue
+        let hashString = "\(languages)\(original)\(derived.sort())"
+        return hashString.hashValue
     }
 }
 
 @warn_unused_result
 public func ==<T: LKTranslationType>(lhs: T, rhs: T) -> Bool {
-    return lhs.languages    == rhs.languages &&
-           lhs.original     == rhs.original  &&
-           lhs.translations == rhs.translations
+    return lhs.languages == rhs.languages &&
+           lhs.original  == rhs.original  &&
+           lhs.derived   == rhs.derived   &&
+           lhs.context   == rhs.context
 }

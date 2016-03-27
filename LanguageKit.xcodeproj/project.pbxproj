@@ -23,6 +23,7 @@
 		DD242BF71CA3925300EC4F5A /* LKTranslatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF51CA3925300EC4F5A /* LKTranslatable.swift */; };
 		DD242BF91CA3926700EC4F5A /* LKVocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF81CA3926700EC4F5A /* LKVocableType.swift */; };
 		DD242BFA1CA3926700EC4F5A /* LKVocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF81CA3926700EC4F5A /* LKVocableType.swift */; };
+		DD242BFC1CA7615D00EC4F5A /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BFB1CA7615D00EC4F5A /* Dictionary.swift */; };
 		DD8CFD171C9F6B7D005F0C30 /* LanguageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD8CFD1E1C9F6B7D005F0C30 /* LanguageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */; };
 		DD8CFD231C9F6B7D005F0C30 /* LanguageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD221C9F6B7D005F0C30 /* LanguageKitTests.swift */; };
@@ -57,6 +58,7 @@
 		DD242BF11CA3911500EC4F5A /* LKTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKTranslation.swift; sourceTree = "<group>"; };
 		DD242BF51CA3925300EC4F5A /* LKTranslatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKTranslatable.swift; sourceTree = "<group>"; };
 		DD242BF81CA3926700EC4F5A /* LKVocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKVocableType.swift; sourceTree = "<group>"; };
+		DD242BFB1CA7615D00EC4F5A /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanguageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageKit.h; sourceTree = "<group>"; };
 		DD8CFD181C9F6B7D005F0C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -128,6 +130,14 @@
 			name = "Vocable Type Protocols";
 			sourceTree = "<group>";
 		};
+		DD242BFD1CA7616B00EC4F5A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DD242BFB1CA7615D00EC4F5A /* Dictionary.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		DD8CFD091C9F6B7D005F0C30 = {
 			isa = PBXGroup;
 			children = (
@@ -149,13 +159,14 @@
 		DD8CFD151C9F6B7D005F0C30 /* LanguageKit */ = {
 			isa = PBXGroup;
 			children = (
-				DD242BF41CA3923E00EC4F5A /* Vocable Type Protocols */,
 				DD242BE41CA38EEE00EC4F5A /* Language Types */,
 				DD242BE51CA38EFB00EC4F5A /* Vocable Style Types */,
 				DD242BEC1CA390E900EC4F5A /* Translation Types */,
-				DD8CFD2E1C9F6BC3005F0C30 /* LKLexicon.swift */,
+				DD242BF41CA3923E00EC4F5A /* Vocable Type Protocols */,
 				DD8CFD301C9F6BC3005F0C30 /* LKVocable.swift */,
+				DD8CFD2E1C9F6BC3005F0C30 /* LKLexicon.swift */,
 				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
+				DD242BFD1CA7616B00EC4F5A /* Extensions */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
 			);
 			path = LanguageKit;
@@ -291,6 +302,7 @@
 				DD8CFD341C9F6BC3005F0C30 /* LKLexicon.swift in Sources */,
 				DD242BF91CA3926700EC4F5A /* LKVocableType.swift in Sources */,
 				DD242BE21CA38E7600EC4F5A /* LKLanguage.swift in Sources */,
+				DD242BFC1CA7615D00EC4F5A /* Dictionary.swift in Sources */,
 				DD242BE71CA38F1D00EC4F5A /* LKAnyVocableStyle.swift in Sources */,
 				DD242BDF1CA38E1D00EC4F5A /* LKAnyLanguage.swift in Sources */,
 			);

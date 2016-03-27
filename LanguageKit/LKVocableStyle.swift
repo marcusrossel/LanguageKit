@@ -14,5 +14,5 @@ import Foundation
 /// All properties are implemented as constants, as this type is meant to be
 /// used like a pure value.
 public struct LKVocableStyle: LKVocableStyleType {
-    public let description: String
+    public let qualifier: String
 }

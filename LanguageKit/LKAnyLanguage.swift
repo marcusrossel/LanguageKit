@@ -10,15 +10,16 @@ import Foundation
 
 /// A type-erasing wrapper for `LKLanguageType`.
 public struct LKAnyLanguage: LKLanguageType {
-    public private(set) var description: String
+    public private(set) var identifier: String
 
-    /// A custom implementation of `hashValue` is used to reduce potential
-    /// hash collisions with other types (as this type is only a wrapper).
+    /// A custom implementation of `hashValue` is used to reduce potential hash
+    /// collisions with other types (as this type is only a wrapper).
     public var hashValue: Int {
-        return "LKAnyLanguage - \(description)".hashValue
+        let specificHashString = "LKAnyLanguage - \(identifier)"
+        return specificHashString.hashValue
     }
 
     public init<T: LKLanguageType>(_ language: T) {
-        description = language.description
+        identifier = language.identifier
     }
 }

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// A protocol representing types, that have the ability to have
+/// `LKTranslationType`s extracted from them.
 public protocol LKTranslatable {
-    var translations: [LKAnyLanguage: Set<String>] { get set }
+    var languageWordPool: [LKAnyLanguage: Set<String>] { get }
+    subscript(original: LKAnyLanguage, derived: LKAnyLanguage) -> [LKAnyTranslation] { get }
 }

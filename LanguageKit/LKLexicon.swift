@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A native `LanguageKit` type which allows types conforming to `LKVocableType`
+/// A native *LanguageKit* type which allows types conforming to `LKVocableType`
 /// to be used collectively.
 public struct LKLexicon<V: LKVocableType where V: Hashable> {
 
