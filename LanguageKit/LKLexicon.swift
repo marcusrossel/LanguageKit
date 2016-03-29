@@ -62,7 +62,7 @@ extension LKLexicon: Hashable {
 }
 
 @warn_unused_result
-public func ==<V>(lhs: LKLexicon<V>, rhs: LKLexicon<V>) -> Bool {
+public func ==<T>(lhs: LKLexicon<T>, rhs: LKLexicon<T>) -> Bool {
     return lhs._storage == rhs._storage
 }
 */
