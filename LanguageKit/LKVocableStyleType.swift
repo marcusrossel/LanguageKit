@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 /// A protocol for types, which are able to represent vocable styles.
 public protocol LKVocableStyleType: Hashable {
     var qualifier: String { get }

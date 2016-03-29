@@ -6,8 +6,7 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
+/*
 /// A native *LanguageKit* type which allows types conforming to `LKVocableType`
 /// to be used collectively.
 public struct LKLexicon<V: LKVocableType where V: Hashable> {
@@ -66,3 +65,4 @@ extension LKLexicon: Hashable {
 public func ==<V>(lhs: LKLexicon<V>, rhs: LKLexicon<V>) -> Bool {
     return lhs._storage == rhs._storage
 }
+*/

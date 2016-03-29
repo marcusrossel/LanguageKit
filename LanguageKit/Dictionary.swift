@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 extension Dictionary {
     /// This method maps the keys of a dictionary to new keys, associating them
     /// with the same values as before though.

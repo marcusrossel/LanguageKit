@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 /// A type-erasing wrapper for `LKVocableStyleType`.
 public struct LKAnyVocableStyle: LKVocableStyleType {
     public private(set) var qualifier: String

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 /// A protocol for types, which are able to represent languages.
 public protocol LKLanguageType: Hashable {
     var identifier: String { get }

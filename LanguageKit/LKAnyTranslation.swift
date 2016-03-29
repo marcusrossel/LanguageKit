@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 /// A type-erasing wrapper for `LKTranslationType`.
 public struct LKAnyTranslation: LKTranslationType {
     public var languages: (original: LKAnyLanguage, derived: LKAnyLanguage)

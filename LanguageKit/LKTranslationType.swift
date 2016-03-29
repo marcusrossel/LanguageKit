@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 public protocol LKTranslationType: Hashable {
     var languages: (original: LKAnyLanguage, derived: LKAnyLanguage) { get }
     var original: String { get }

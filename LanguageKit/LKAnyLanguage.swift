@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 /// A type-erasing wrapper for `LKLanguageType`.
 public struct LKAnyLanguage: LKLanguageType {
     public private(set) var identifier: String

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-import Foundation
-
 /// Simple structure conforming to the base requirements of `LKTranslationType`.
 ///
 /// All properties are implemented as constants, as this type is meant to be

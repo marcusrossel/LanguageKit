@@ -8,46 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		DD242BDF1CA38E1D00EC4F5A /* LKAnyLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BDE1CA38E1D00EC4F5A /* LKAnyLanguage.swift */; };
-		DD242BE01CA38E1D00EC4F5A /* LKAnyLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BDE1CA38E1D00EC4F5A /* LKAnyLanguage.swift */; };
 		DD242BE21CA38E7600EC4F5A /* LKLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE11CA38E7600EC4F5A /* LKLanguage.swift */; };
-		DD242BE31CA38E7600EC4F5A /* LKLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE11CA38E7600EC4F5A /* LKLanguage.swift */; };
 		DD242BE71CA38F1D00EC4F5A /* LKAnyVocableStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE61CA38F1D00EC4F5A /* LKAnyVocableStyle.swift */; };
-		DD242BE81CA38F1D00EC4F5A /* LKAnyVocableStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE61CA38F1D00EC4F5A /* LKAnyVocableStyle.swift */; };
 		DD242BEA1CA38F2A00EC4F5A /* LKVocableStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE91CA38F2A00EC4F5A /* LKVocableStyle.swift */; };
-		DD242BEB1CA38F2A00EC4F5A /* LKVocableStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE91CA38F2A00EC4F5A /* LKVocableStyle.swift */; };
 		DD242BEF1CA3910D00EC4F5A /* LKAnyTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BEE1CA3910D00EC4F5A /* LKAnyTranslation.swift */; };
-		DD242BF01CA3910D00EC4F5A /* LKAnyTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BEE1CA3910D00EC4F5A /* LKAnyTranslation.swift */; };
 		DD242BF21CA3911500EC4F5A /* LKTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF11CA3911500EC4F5A /* LKTranslation.swift */; };
-		DD242BF31CA3911500EC4F5A /* LKTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF11CA3911500EC4F5A /* LKTranslation.swift */; };
 		DD242BF61CA3925300EC4F5A /* LKTranslatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF51CA3925300EC4F5A /* LKTranslatable.swift */; };
-		DD242BF71CA3925300EC4F5A /* LKTranslatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF51CA3925300EC4F5A /* LKTranslatable.swift */; };
 		DD242BF91CA3926700EC4F5A /* LKVocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF81CA3926700EC4F5A /* LKVocableType.swift */; };
-		DD242BFA1CA3926700EC4F5A /* LKVocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF81CA3926700EC4F5A /* LKVocableType.swift */; };
 		DD242BFC1CA7615D00EC4F5A /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BFB1CA7615D00EC4F5A /* Dictionary.swift */; };
 		DD8CFD171C9F6B7D005F0C30 /* LanguageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD8CFD1E1C9F6B7D005F0C30 /* LanguageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */; };
-		DD8CFD231C9F6B7D005F0C30 /* LanguageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD221C9F6B7D005F0C30 /* LanguageKitTests.swift */; };
 		DD8CFD321C9F6BC3005F0C30 /* LKLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2D1C9F6BC3005F0C30 /* LKLanguageType.swift */; };
-		DD8CFD331C9F6BC3005F0C30 /* LKLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2D1C9F6BC3005F0C30 /* LKLanguageType.swift */; };
 		DD8CFD341C9F6BC3005F0C30 /* LKLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2E1C9F6BC3005F0C30 /* LKLexicon.swift */; };
-		DD8CFD351C9F6BC3005F0C30 /* LKLexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2E1C9F6BC3005F0C30 /* LKLexicon.swift */; };
 		DD8CFD361C9F6BC3005F0C30 /* LKTranslationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2F1C9F6BC3005F0C30 /* LKTranslationType.swift */; };
-		DD8CFD371C9F6BC3005F0C30 /* LKTranslationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2F1C9F6BC3005F0C30 /* LKTranslationType.swift */; };
 		DD8CFD381C9F6BC3005F0C30 /* LKVocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD301C9F6BC3005F0C30 /* LKVocable.swift */; };
-		DD8CFD391C9F6BC3005F0C30 /* LKVocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD301C9F6BC3005F0C30 /* LKVocable.swift */; };
 		DD8CFD3A1C9F6BC3005F0C30 /* LKVocableStyleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD311C9F6BC3005F0C30 /* LKVocableStyleType.swift */; };
-		DD8CFD3B1C9F6BC3005F0C30 /* LKVocableStyleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD311C9F6BC3005F0C30 /* LKVocableStyleType.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		DD8CFD1F1C9F6B7D005F0C30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DD8CFD0A1C9F6B7D005F0C30 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DD8CFD121C9F6B7D005F0C30;
-			remoteInfo = LanguageKit;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DD242BDE1CA38E1D00EC4F5A /* LKAnyLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKAnyLanguage.swift; sourceTree = "<group>"; };
@@ -62,9 +37,6 @@
 		DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanguageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageKit.h; sourceTree = "<group>"; };
 		DD8CFD181C9F6B7D005F0C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD8CFD1D1C9F6B7D005F0C30 /* LanguageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LanguageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD8CFD221C9F6B7D005F0C30 /* LanguageKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageKitTests.swift; sourceTree = "<group>"; };
-		DD8CFD241C9F6B7D005F0C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD8CFD2D1C9F6BC3005F0C30 /* LKLanguageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKLanguageType.swift; sourceTree = "<group>"; };
 		DD8CFD2E1C9F6BC3005F0C30 /* LKLexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKLexicon.swift; sourceTree = "<group>"; };
 		DD8CFD2F1C9F6BC3005F0C30 /* LKTranslationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKTranslationType.swift; sourceTree = "<group>"; };
@@ -77,14 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DD8CFD1A1C9F6B7D005F0C30 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DD8CFD1E1C9F6B7D005F0C30 /* LanguageKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				DD8CFD151C9F6B7D005F0C30 /* LanguageKit */,
-				DD8CFD211C9F6B7D005F0C30 /* LanguageKitTests */,
 				DD8CFD141C9F6B7D005F0C30 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -151,7 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */,
-				DD8CFD1D1C9F6B7D005F0C30 /* LanguageKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -170,15 +132,6 @@
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
 			);
 			path = LanguageKit;
-			sourceTree = "<group>";
-		};
-		DD8CFD211C9F6B7D005F0C30 /* LanguageKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				DD8CFD221C9F6B7D005F0C30 /* LanguageKitTests.swift */,
-				DD8CFD241C9F6B7D005F0C30 /* Info.plist */,
-			);
-			path = LanguageKitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,24 +166,6 @@
 			productReference = DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		DD8CFD1C1C9F6B7D005F0C30 /* LanguageKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DD8CFD2A1C9F6B7D005F0C30 /* Build configuration list for PBXNativeTarget "LanguageKitTests" */;
-			buildPhases = (
-				DD8CFD191C9F6B7D005F0C30 /* Sources */,
-				DD8CFD1A1C9F6B7D005F0C30 /* Frameworks */,
-				DD8CFD1B1C9F6B7D005F0C30 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DD8CFD201C9F6B7D005F0C30 /* PBXTargetDependency */,
-			);
-			name = LanguageKitTests;
-			productName = LanguageKitTests;
-			productReference = DD8CFD1D1C9F6B7D005F0C30 /* LanguageKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -242,10 +177,6 @@
 				ORGANIZATIONNAME = "Marcus Rossel";
 				TargetAttributes = {
 					DD8CFD121C9F6B7D005F0C30 = {
-						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 8YSJ38HAEZ;
-					};
-					DD8CFD1C1C9F6B7D005F0C30 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 8YSJ38HAEZ;
 					};
@@ -264,20 +195,12 @@
 			projectRoot = "";
 			targets = (
 				DD8CFD121C9F6B7D005F0C30 /* LanguageKit */,
-				DD8CFD1C1C9F6B7D005F0C30 /* LanguageKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DD8CFD111C9F6B7D005F0C30 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DD8CFD1B1C9F6B7D005F0C30 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -308,36 +231,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DD8CFD191C9F6B7D005F0C30 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DD8CFD351C9F6BC3005F0C30 /* LKLexicon.swift in Sources */,
-				DD8CFD3B1C9F6BC3005F0C30 /* LKVocableStyleType.swift in Sources */,
-				DD8CFD331C9F6BC3005F0C30 /* LKLanguageType.swift in Sources */,
-				DD242BF01CA3910D00EC4F5A /* LKAnyTranslation.swift in Sources */,
-				DD242BF31CA3911500EC4F5A /* LKTranslation.swift in Sources */,
-				DD242BE81CA38F1D00EC4F5A /* LKAnyVocableStyle.swift in Sources */,
-				DD8CFD371C9F6BC3005F0C30 /* LKTranslationType.swift in Sources */,
-				DD8CFD391C9F6BC3005F0C30 /* LKVocable.swift in Sources */,
-				DD242BE01CA38E1D00EC4F5A /* LKAnyLanguage.swift in Sources */,
-				DD242BF71CA3925300EC4F5A /* LKTranslatable.swift in Sources */,
-				DD242BE31CA38E7600EC4F5A /* LKLanguage.swift in Sources */,
-				DD242BFA1CA3926700EC4F5A /* LKVocableType.swift in Sources */,
-				DD8CFD231C9F6B7D005F0C30 /* LanguageKitTests.swift in Sources */,
-				DD242BEB1CA38F2A00EC4F5A /* LKVocableStyle.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		DD8CFD201C9F6B7D005F0C30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DD8CFD121C9F6B7D005F0C30 /* LanguageKit */;
-			targetProxy = DD8CFD1F1C9F6B7D005F0C30 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DD8CFD251C9F6B7D005F0C30 /* Debug */ = {
@@ -422,6 +316,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -471,26 +366,6 @@
 			};
 			name = Release;
 		};
-		DD8CFD2B1C9F6B7D005F0C30 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = LanguageKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcusrossel.LanguageKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		DD8CFD2C1C9F6B7D005F0C30 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = LanguageKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marcusrossel.LanguageKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -508,15 +383,6 @@
 			buildConfigurations = (
 				DD8CFD281C9F6B7D005F0C30 /* Debug */,
 				DD8CFD291C9F6B7D005F0C30 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DD8CFD2A1C9F6B7D005F0C30 /* Build configuration list for PBXNativeTarget "LanguageKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DD8CFD2B1C9F6B7D005F0C30 /* Debug */,
-				DD8CFD2C1C9F6B7D005F0C30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
