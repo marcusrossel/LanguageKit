@@ -1,75 +1,92 @@
 //
-//  LKVocable.swift
+//  Vocable.swift
 //  LanguageKit
 //
 //  Created by Marcus Rossel on 20.03.16.
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-
 /// The native *LanguageKit* vocable type.
-public struct LKVocable: LKVocableType {
-    /// An embedded `LKVocableStyleType` which can be used for convenience.
-    public enum Style: String, LKVocableStyleType {
+///
+/// An `Vocable` bundels *words/phrases/etc.* of the same meaning into one
+/// data structure. The connection between the *words/phrases/etc.* is therefore
+/// semantic, not language-based.
+public struct Vocable: VocableType {
+    /// An embedded `VocableStyleType` which can be used for convenience.
+    public enum Style: String, VocableStyleType {
         case Word
         case Phrase
         public var qualifier: String { return "\(self)" }
     }
 
-    public var languageWordPool: [LKAnyLanguage: Set<String>] = [:]
-    public var style: LKAnyVocableStyle
-    public var context: [LKAnyLanguage: String] = [:]
+    public var languageWordPool: [AnyLanguage: Set<String>] = [:]
+    public var style: AnyVocableStyle
+    public var context: [AnyLanguage: String] = [:]
 
-    /// This subscript gives direct access to `LKVocable`'s `languageWordPool`
+    /// This subscript gives direct access to `Vocable`'s `languageWordPool`
     /// dictionary.
-    public subscript(language: LKAnyLanguage) -> Set<String>? {
-        get { return languageWordPool[language] }
+    public subscript(language: AnyLanguage) -> Set<String> {
+        get { return languageWordPool[language] ?? [] }
         set { languageWordPool[language] = newValue }
     }
 
     /// If the `originalLanguage` is not found in `languageWordPool`, an empty
     /// array is returned.  
     /// If the `derivedLanguage` is not found in `languageWordPool`,
-    /// `LKAnyTranslation`s with an empty `Set` for `derived` will be returned.
-    public subscript(originalLanguage: LKAnyLanguage, derivedLanguage: LKAnyLanguage) -> [LKAnyTranslation] {
+    /// `AnyTranslation`s with an empty `Set` for `derived` will be returned.
+    public subscript(originalLanguage: AnyLanguage, derivedLanguage: AnyLanguage) -> [AnyTranslation] {
         guard let originals = languageWordPool[originalLanguage] else { return [] }
         guard !originals.isEmpty else { return [] }
 
-        let translations: [LKTranslation] = originals.map { original in
+        let translations: [Translation] = originals.map { original in
             let derivedStrings = languageWordPool[derivedLanguage] ?? []
             let contextString = context[originalLanguage]
 
-            return LKTranslation(languages: (originalLanguage, derivedLanguage),
-                                 original: original,
-                                 derived: derivedStrings,
-                                 context: contextString)
+            return Translation(languages: (originalLanguage, derivedLanguage),
+                               original: original,
+                               derived: derivedStrings,
+                               context: contextString)
         }
 
-        let anyTranslations = translations.map(LKAnyTranslation.init)
+        let anyTranslations = translations.map(AnyTranslation.init)
         return anyTranslations
     }
 
-    public init<VST: LKVocableStyleType, LT: LKLanguageType>(style: VST, languageWordPool: [LT: Set<String>] = [:], context: [LT: String] = [:]) {
-        self.style = LKAnyVocableStyle(style)
+    /// It is more efficient to initialize an `VocableType` and call the
+    /// `init(vocableType:)` initializer, than using this one.
+    public init<VST: VocableStyleType, LT: LanguageType>(style: VST, languageWordPool: [LT: Set<String>] = [:], context: [LT: String] = [:]) {
+        self.style = AnyVocableStyle(style)
 
-        let mappedPool = languageWordPool.mapKeys(LKAnyLanguage.init)
+        let mappedPool = languageWordPool.mapKeys(AnyLanguage.init)
         self.languageWordPool = mappedPool
 
-        let mappedContext = context.mapKeys(LKAnyLanguage.init)
+        let mappedContext = context.mapKeys(AnyLanguage.init)
         self.context = mappedContext
     }
 
-    public init<T: LKVocableType>(vocableType: T) {
+    public init<T: VocableType>(vocableType: T) {
         style = vocableType.style
         languageWordPool = vocableType.languageWordPool
         context = vocableType.context
     }
+
+    public init(style: AnyVocableStyle, translation: AnyTranslation) {
+        self.style = style
+
+        let (oLang, dLang) = (translation.languages.original, translation.languages.derived)
+        let originalSet = Set([translation.original])
+        let pool = [oLang: originalSet, dLang: translation.derived]
+
+        self.languageWordPool = pool
+
+        self.context = [oLang: translation.context ?? ""]
+    }
 }
 
-extension LKVocable: Hashable {
+extension Vocable: Hashable {
     public var hashValue: Int {
         // The function used to sort `languageWordPool` and `context`'s `keys`.
-        let keySort = { (key1: LKAnyLanguage, key2: LKAnyLanguage) in
+        let keySort = { (key1: AnyLanguage, key2: AnyLanguage) in
             key1.identifier < key2.identifier
         }
 
@@ -86,7 +103,7 @@ extension LKVocable: Hashable {
         .map { (_, set) in
             return set.sort(<)
         }
-        .flatMap { $0 }
+        .flatten()
 
         let sortedContextKeys = context.keys.sort(keySort)
         let sortedContextValues = context.values.sort(<)

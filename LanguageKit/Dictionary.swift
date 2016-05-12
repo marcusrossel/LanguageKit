@@ -6,10 +6,10 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-extension Dictionary {
+internal extension Dictionary {
     /// This method maps the keys of a dictionary to new keys, associating them
     /// with the same values as before though.
-    func mapKeys<NewKey: Hashable>(@noescape transform: (Key) throws -> NewKey) rethrows -> [NewKey: Value] {
+    internal func mapKeys<NewKey: Hashable>(@noescape transform: (Key) throws -> NewKey) rethrows -> [NewKey: Value] {
         let bothKeys = try keys.map { key in
             return (key, try transform(key))
         }

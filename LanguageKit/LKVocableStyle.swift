@@ -1,5 +1,5 @@
 //
-//  LKVocableStyle.swift
+//  VocableStyle.swift
 //  LanguageKit
 //
 //  Created by Marcus Rossel on 23.03.16.
@@ -7,10 +7,10 @@
 //
 
 /// Simple structure conforming to the base requirements of
-/// `LKVocableStyleType`.
+/// `VocableStyleType`.
 ///
 /// All properties are implemented as constants, as this type is meant to be
 /// used like a pure value.
-public struct LKVocableStyle: LKVocableStyleType {
+public struct VocableStyle: VocableStyleType {
     public let qualifier: String
 }

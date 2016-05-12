@@ -1,5 +1,5 @@
 //
-//  LKTranslatable.swift
+//  Translatable.swift
 //  LanguageKit
 //
 //  Created by Marcus Rossel on 23.03.16.
@@ -7,8 +7,8 @@
 //
 
 /// A protocol representing types, that have the ability to have
-/// `LKTranslationType`s extracted from them.
-public protocol LKTranslatable {
-    var languageWordPool: [LKAnyLanguage: Set<String>] { get }
-    subscript(originalLanguage: LKAnyLanguage, derivedLanguage: LKAnyLanguage) -> [LKAnyTranslation] { get }
+/// `TranslationType`s extracted from them.
+public protocol Translatable {
+    var languageWordPool: [AnyLanguage: Set<String>] { get }
+    subscript(originalLanguage: AnyLanguage, derivedLanguage: AnyLanguage) -> [AnyTranslation] { get }
 }

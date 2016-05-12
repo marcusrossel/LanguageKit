@@ -22,6 +22,7 @@
 		DD8CFD361C9F6BC3005F0C30 /* LKTranslationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2F1C9F6BC3005F0C30 /* LKTranslationType.swift */; };
 		DD8CFD381C9F6BC3005F0C30 /* LKVocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD301C9F6BC3005F0C30 /* LKVocable.swift */; };
 		DD8CFD3A1C9F6BC3005F0C30 /* LKVocableStyleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD311C9F6BC3005F0C30 /* LKVocableStyleType.swift */; };
+		DD8DF0541CAE1E44007FACAB /* LKLexicon_.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DF0531CAE1E44007FACAB /* LKLexicon_.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		DD8CFD2F1C9F6BC3005F0C30 /* LKTranslationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKTranslationType.swift; sourceTree = "<group>"; };
 		DD8CFD301C9F6BC3005F0C30 /* LKVocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKVocable.swift; sourceTree = "<group>"; };
 		DD8CFD311C9F6BC3005F0C30 /* LKVocableStyleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKVocableStyleType.swift; sourceTree = "<group>"; };
+		DD8DF0531CAE1E44007FACAB /* LKLexicon_.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LKLexicon_.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				DD242BF41CA3923E00EC4F5A /* Vocable Type Protocols */,
 				DD8CFD301C9F6BC3005F0C30 /* LKVocable.swift */,
 				DD8CFD2E1C9F6BC3005F0C30 /* LKLexicon.swift */,
+				DD8DF0531CAE1E44007FACAB /* LKLexicon_.swift */,
 				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD242BFD1CA7616B00EC4F5A /* Extensions */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
@@ -221,6 +224,7 @@
 				DD242BEA1CA38F2A00EC4F5A /* LKVocableStyle.swift in Sources */,
 				DD8CFD321C9F6BC3005F0C30 /* LKLanguageType.swift in Sources */,
 				DD242BF21CA3911500EC4F5A /* LKTranslation.swift in Sources */,
+				DD8DF0541CAE1E44007FACAB /* LKLexicon_.swift in Sources */,
 				DD242BEF1CA3910D00EC4F5A /* LKAnyTranslation.swift in Sources */,
 				DD8CFD341C9F6BC3005F0C30 /* LKLexicon.swift in Sources */,
 				DD242BF91CA3926700EC4F5A /* LKVocableType.swift in Sources */,
