@@ -14,7 +14,7 @@ internal extension Dictionary {
             return (key, try transform(key))
         }
 
-        var newDictionary: [NewKey: Value] = [:]
+        var newDictionary = [NewKey: Value]()
         for (oldKey, newKey) in bothKeys {
             newDictionary[newKey] = self[oldKey]
         }

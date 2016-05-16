@@ -19,9 +19,9 @@ public struct Vocable: VocableType {
         public var qualifier: String { return "\(self)" }
     }
 
-    public var languageWordPool: [AnyLanguage: Set<String>] = [:]
+    public var languageWordPool = [AnyLanguage: Set<String>]()
     public var style: AnyVocableStyle
-    public var context: [AnyLanguage: String] = [:]
+    public var context = [AnyLanguage: String]()
 
     /// This subscript gives direct access to `Vocable`'s `languageWordPool`
     /// dictionary.
