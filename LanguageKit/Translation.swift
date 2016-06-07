@@ -6,11 +6,12 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-/// Simple structure conforming to the base requirements of `TranslationType`.
+/// Simple structure conforming to the base requirements of
+/// `TranslationProtocol`.
 ///
 /// All properties are implemented as constants, as this type is meant to be
 /// used like a pure value.
-public struct Translation: TranslationType {
+public struct Translation: TranslationProtocol {
     public let languages: (original: AnyLanguage, derived: AnyLanguage)
     public let original: String
     public let derived: Set<String>

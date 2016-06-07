@@ -7,8 +7,8 @@
 //
 
 /// A protocol representing types, that have the ability to have
-/// `TranslationType`s extracted from them.
+/// `TranslationProtocol`s extracted from them.
 public protocol Translatable {
-    var languageWordPool: [AnyLanguage: Set<String>] { get }
+    var contentPool: [AnyLanguage: Set<String>] { get }
     subscript(originalLanguage: AnyLanguage, derivedLanguage: AnyLanguage) -> [AnyTranslation] { get }
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-/// A type-erasing wrapper for `TranslationType`.
-public struct AnyTranslation: TranslationType {
+/// A type-erasing wrapper for `TranslationProtocol`.
+public struct AnyTranslation: TranslationProtocol {
     public var languages: (original: AnyLanguage, derived: AnyLanguage)
     public var original: String
     public var derived: Set<String>
@@ -20,7 +20,7 @@ public struct AnyTranslation: TranslationType {
         return propertiesString.hashValue
     }
 
-    public init<T: TranslationType>(_ translation: T) {
+    public init<T: TranslationProtocol>(_ translation: T) {
         languages = translation.languages
         original = translation.original
         derived = translation.derived

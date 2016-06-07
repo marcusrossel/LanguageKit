@@ -47,23 +47,23 @@ public struct Lexicon_ {
 
     /// Creates an `Vocable` from the given parameters, and calls
     /// `Lexicon_.insert.(vocable:)`
-    public mutating func insert(translation translation: AnyTranslation, style: AnyVocableStyle) {
+    public mutating func insert(translation translation: AnyTranslation, style: AnyVocableType) {
         let vocable = Vocable(style: style, translation: translation)
         insert(vocable: vocable)
     }
 
     /// Creates an `Vocable` from the given parameters, and calls
     /// `Lexicon_.remove.(vocable:)`
-    public mutating func remove(translation translation: AnyTranslation, style: AnyVocableStyle) {
+    public mutating func remove(translation translation: AnyTranslation, style: AnyVocableType) {
         let vocable = Vocable(style: style, translation: translation)
         remove(vocable: vocable)
     }
 
     /// Creates an `Vocable` from the given parameters, and calls
     /// `Lexicon_.insert.(vocable:)`
-    public mutating func insert(string string: String, as style: AnyVocableStyle, for language: AnyLanguage) {
+    public mutating func insert(string string: String, as style: AnyVocableType, for language: AnyLanguage) {
         let vocable = Vocable(style: style,
-                              languageWordPool: [language: Set([string])],
+                              contentPool: [language: Set([string])],
                               context: [:])
 
         insert(vocable: vocable)
@@ -71,9 +71,9 @@ public struct Lexicon_ {
 
     /// Creates an `Vocable` from the given parameters, and calls
     /// `Lexicon_.remove.(vocable:)`
-    public mutating func remove(string string: String, as style: AnyVocableStyle, for language: AnyLanguage) {
+    public mutating func remove(string string: String, as style: AnyVocableType, for language: AnyLanguage) {
         let vocable = Vocable(style: style,
-                                languageWordPool: [language: Set([string])],
+                                contentPool: [language: Set([string])],
                                 context: [:])
 
         remove(vocable: vocable)
@@ -82,7 +82,7 @@ public struct Lexicon_ {
     /// Default parameters do not seem to be allowed for subscripts yet.
     /// To ignore the `vocableStyle`, it should therefore be passed a value of
     /// `nil`.
-    public subscript(originalLanguage oLang: AnyLanguage, derivedLanguage dLang: AnyLanguage, vocableStyle vStyle: AnyVocableStyle?) -> Set<AnyTranslation> {
+    public subscript(originalLanguage oLang: AnyLanguage, derivedLanguage dLang: AnyLanguage, vocableStyle vStyle: AnyVocableType?) -> Set<AnyTranslation> {
         let vocablePool: [V]
 
         if let style = vStyle {

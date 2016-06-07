@@ -6,19 +6,19 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-/// A native *LanguageKit* type which allows types conforming to `VocableType`
-/// to be used collectively.
+/// A native *LanguageKit* type which allows types conforming to
+/// `VocableProtocol` to be used collectively.
 ///
 /// An `Lexion` contains a set of vocables - some type confroming to
-/// `VocableType` - which are unique in their meaning. Each vocable is defined
-/// by the meaning of the *word/phrase/etc.* that it contains, not by the
-/// language it represents.
+/// `VocableProtocol` - which are unique in their meaning. Each vocable is
+/// defined by the meaning of the *word/phrase/etc.* that it contains, not by
+/// the language it represents.
 /// When a connection can be made between vocables, they are merged into one,
 /// therefore bundeling words/phrases/etc. of the same meaning into one vocable.
 /// The result of inserting information into the lexicon, might therefore an
 /// increase in size of certain vocables, not an increase in the number of
 /// vocables.
-public struct Lexicon<V: VocableType where V: Hashable> {
+public struct Lexicon<V: VocableProtocol where V: Hashable> {
     private var _storage: Set<V> = []
 
     public mutating func insert(vocable vocable: V) {
@@ -38,12 +38,12 @@ public struct Lexicon<V: VocableType where V: Hashable> {
         // if it's not a strict subvocable. dont remove it
     }
 
-    public mutating func insert(translation translation: AnyTranslation, style: AnyVocableStyle) {
+    public mutating func insert(translation translation: AnyTranslation, style: AnyVocableType) {
         let vocable = V(style: style, translation: translation)
         insert(vocable: vocable)
     }
 
-    public mutating func remove(translation translation: AnyTranslation, style: AnyVocableStyle) {
+    public mutating func remove(translation translation: AnyTranslation, style: AnyVocableType) {
         // same as with `removeVocable`. if the translation is not a strickt
         // subset... nothing happens
     }
@@ -51,7 +51,7 @@ public struct Lexicon<V: VocableType where V: Hashable> {
     /// Default parameters do not seem to be allowed for subscripts yet.
     /// To ignore the `vocableStyle`, it should therefore be passed a value of
     /// `nil`.
-    public subscript(originalLanguage oLang: AnyLanguage, derivedLanguage dLang: AnyLanguage, vocableStyle vStyle: AnyVocableStyle?) -> Set<AnyTranslation> {
+    public subscript(originalLanguage oLang: AnyLanguage, derivedLanguage dLang: AnyLanguage, vocableStyle vStyle: AnyVocableType?) -> Set<AnyTranslation> {
         let vocablePool: [V]
 
         if let style = vStyle {
