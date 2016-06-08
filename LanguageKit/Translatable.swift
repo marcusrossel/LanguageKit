@@ -9,6 +9,6 @@
 /// A protocol representing types, that have the ability to have
 /// `TranslationProtocol`s extracted from them.
 public protocol Translatable {
-    var contentPool: [AnyLanguage: Set<String>] { get }
-    subscript(originalLanguage: AnyLanguage, derivedLanguage: AnyLanguage) -> [AnyTranslation] { get }
+    var contentPool: [Language: Set<String>] { get }
+    subscript(originalLanguage: Language, derivedLanguage: Language) -> [AnyTranslation] { get }
 }

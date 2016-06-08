@@ -7,43 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD242BDF1CA38E1D00EC4F5A /* AnyLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BDE1CA38E1D00EC4F5A /* AnyLanguage.swift */; };
-		DD242BE21CA38E7600EC4F5A /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE11CA38E7600EC4F5A /* Language.swift */; };
-		DD242BE71CA38F1D00EC4F5A /* AnyVocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE61CA38F1D00EC4F5A /* AnyVocableType.swift */; };
-		DD242BEA1CA38F2A00EC4F5A /* VocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BE91CA38F2A00EC4F5A /* VocableType.swift */; };
+		DD182D451D0713D60051ACFA /* VocableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D441D0713D60051ACFA /* VocableProtocol.swift */; };
+		DD182D471D0713F50051ACFA /* Fundamentals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D461D0713F50051ACFA /* Fundamentals.swift */; };
+		DD182D491D07140A0051ACFA /* Vocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D481D07140A0051ACFA /* Vocable.swift */; };
+		DD182D4D1D0744F40051ACFA /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D4C1D0744F40051ACFA /* Lexicon.swift */; };
 		DD242BEF1CA3910D00EC4F5A /* AnyTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BEE1CA3910D00EC4F5A /* AnyTranslation.swift */; };
 		DD242BF21CA3911500EC4F5A /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF11CA3911500EC4F5A /* Translation.swift */; };
 		DD242BF61CA3925300EC4F5A /* Translatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF51CA3925300EC4F5A /* Translatable.swift */; };
-		DD242BF91CA3926700EC4F5A /* VocableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BF81CA3926700EC4F5A /* VocableProtocol.swift */; };
 		DD242BFC1CA7615D00EC4F5A /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD242BFB1CA7615D00EC4F5A /* Dictionary.swift */; };
 		DD8CFD171C9F6B7D005F0C30 /* LanguageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD8CFD321C9F6BC3005F0C30 /* LanguageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2D1C9F6BC3005F0C30 /* LanguageProtocol.swift */; };
-		DD8CFD341C9F6BC3005F0C30 /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2E1C9F6BC3005F0C30 /* Lexicon.swift */; };
+		DD8CFD341C9F6BC3005F0C30 /* Lexicon_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2E1C9F6BC3005F0C30 /* Lexicon_old.swift */; };
 		DD8CFD361C9F6BC3005F0C30 /* TranslationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2F1C9F6BC3005F0C30 /* TranslationProtocol.swift */; };
-		DD8CFD381C9F6BC3005F0C30 /* Vocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD301C9F6BC3005F0C30 /* Vocable.swift */; };
-		DD8CFD3A1C9F6BC3005F0C30 /* VocableTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD311C9F6BC3005F0C30 /* VocableTypeProtocol.swift */; };
-		DD8DF0541CAE1E44007FACAB /* Lexicon_.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DF0531CAE1E44007FACAB /* Lexicon_.swift */; };
+		DD8DF0541CAE1E44007FACAB /* Lexicon_retry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DF0531CAE1E44007FACAB /* Lexicon_retry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DD242BDE1CA38E1D00EC4F5A /* AnyLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyLanguage.swift; sourceTree = "<group>"; };
-		DD242BE11CA38E7600EC4F5A /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
-		DD242BE61CA38F1D00EC4F5A /* AnyVocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyVocableType.swift; sourceTree = "<group>"; };
-		DD242BE91CA38F2A00EC4F5A /* VocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocableType.swift; sourceTree = "<group>"; };
+		DD182D441D0713D60051ACFA /* VocableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocableProtocol.swift; sourceTree = "<group>"; };
+		DD182D461D0713F50051ACFA /* Fundamentals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fundamentals.swift; sourceTree = "<group>"; };
+		DD182D481D07140A0051ACFA /* Vocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vocable.swift; sourceTree = "<group>"; };
+		DD182D4C1D0744F40051ACFA /* Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.swift; sourceTree = "<group>"; };
 		DD242BEE1CA3910D00EC4F5A /* AnyTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyTranslation.swift; sourceTree = "<group>"; };
 		DD242BF11CA3911500EC4F5A /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
 		DD242BF51CA3925300EC4F5A /* Translatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translatable.swift; sourceTree = "<group>"; };
-		DD242BF81CA3926700EC4F5A /* VocableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocableProtocol.swift; sourceTree = "<group>"; };
 		DD242BFB1CA7615D00EC4F5A /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanguageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageKit.h; sourceTree = "<group>"; };
 		DD8CFD181C9F6B7D005F0C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD8CFD2D1C9F6BC3005F0C30 /* LanguageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageProtocol.swift; sourceTree = "<group>"; };
-		DD8CFD2E1C9F6BC3005F0C30 /* Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.swift; sourceTree = "<group>"; };
+		DD8CFD2E1C9F6BC3005F0C30 /* Lexicon_old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon_old.swift; sourceTree = "<group>"; };
 		DD8CFD2F1C9F6BC3005F0C30 /* TranslationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationProtocol.swift; sourceTree = "<group>"; };
-		DD8CFD301C9F6BC3005F0C30 /* Vocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vocable.swift; sourceTree = "<group>"; };
-		DD8CFD311C9F6BC3005F0C30 /* VocableTypeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocableTypeProtocol.swift; sourceTree = "<group>"; };
-		DD8DF0531CAE1E44007FACAB /* Lexicon_.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon_.swift; sourceTree = "<group>"; };
+		DD8DF0531CAE1E44007FACAB /* Lexicon_retry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon_retry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,26 +49,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DD242BE41CA38EEE00EC4F5A /* Language Types */ = {
-			isa = PBXGroup;
-			children = (
-				DD8CFD2D1C9F6BC3005F0C30 /* LanguageProtocol.swift */,
-				DD242BDE1CA38E1D00EC4F5A /* AnyLanguage.swift */,
-				DD242BE11CA38E7600EC4F5A /* Language.swift */,
-			);
-			name = "Language Types";
-			sourceTree = "<group>";
-		};
-		DD242BE51CA38EFB00EC4F5A /* Vocable Style Types */ = {
-			isa = PBXGroup;
-			children = (
-				DD8CFD311C9F6BC3005F0C30 /* VocableTypeProtocol.swift */,
-				DD242BE61CA38F1D00EC4F5A /* AnyVocableType.swift */,
-				DD242BE91CA38F2A00EC4F5A /* VocableType.swift */,
-			);
-			name = "Vocable Style Types";
-			sourceTree = "<group>";
-		};
 		DD242BEC1CA390E900EC4F5A /* Translation Types */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,7 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				DD242BF51CA3925300EC4F5A /* Translatable.swift */,
-				DD242BF81CA3926700EC4F5A /* VocableProtocol.swift */,
 			);
 			name = "Vocable Protocols";
 			sourceTree = "<group>";
@@ -123,13 +94,15 @@
 		DD8CFD151C9F6B7D005F0C30 /* LanguageKit */ = {
 			isa = PBXGroup;
 			children = (
-				DD242BE41CA38EEE00EC4F5A /* Language Types */,
-				DD242BE51CA38EFB00EC4F5A /* Vocable Style Types */,
+				DD182D461D0713F50051ACFA /* Fundamentals.swift */,
+				DD182D441D0713D60051ACFA /* VocableProtocol.swift */,
+				DD182D481D07140A0051ACFA /* Vocable.swift */,
+				DD182D4C1D0744F40051ACFA /* Lexicon.swift */,
 				DD242BEC1CA390E900EC4F5A /* Translation Types */,
 				DD242BF41CA3923E00EC4F5A /* Vocable Protocols */,
 				DDD69D881CF7251C0061FCAE /* Value Types */,
-				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD242BFD1CA7616B00EC4F5A /* Extensions */,
+				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
 			);
 			path = LanguageKit;
@@ -138,9 +111,8 @@
 		DDD69D881CF7251C0061FCAE /* Value Types */ = {
 			isa = PBXGroup;
 			children = (
-				DD8CFD301C9F6BC3005F0C30 /* Vocable.swift */,
-				DD8CFD2E1C9F6BC3005F0C30 /* Lexicon.swift */,
-				DD8DF0531CAE1E44007FACAB /* Lexicon_.swift */,
+				DD8CFD2E1C9F6BC3005F0C30 /* Lexicon_old.swift */,
+				DD8DF0531CAE1E44007FACAB /* Lexicon_retry.swift */,
 			);
 			name = "Value Types";
 			sourceTree = "<group>";
@@ -225,21 +197,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD8CFD3A1C9F6BC3005F0C30 /* VocableTypeProtocol.swift in Sources */,
 				DD8CFD361C9F6BC3005F0C30 /* TranslationProtocol.swift in Sources */,
-				DD8CFD381C9F6BC3005F0C30 /* Vocable.swift in Sources */,
 				DD242BF61CA3925300EC4F5A /* Translatable.swift in Sources */,
-				DD242BEA1CA38F2A00EC4F5A /* VocableType.swift in Sources */,
-				DD8CFD321C9F6BC3005F0C30 /* LanguageProtocol.swift in Sources */,
+				DD182D491D07140A0051ACFA /* Vocable.swift in Sources */,
+				DD182D471D0713F50051ACFA /* Fundamentals.swift in Sources */,
 				DD242BF21CA3911500EC4F5A /* Translation.swift in Sources */,
-				DD8DF0541CAE1E44007FACAB /* Lexicon_.swift in Sources */,
+				DD8DF0541CAE1E44007FACAB /* Lexicon_retry.swift in Sources */,
 				DD242BEF1CA3910D00EC4F5A /* AnyTranslation.swift in Sources */,
-				DD8CFD341C9F6BC3005F0C30 /* Lexicon.swift in Sources */,
-				DD242BF91CA3926700EC4F5A /* VocableProtocol.swift in Sources */,
-				DD242BE21CA38E7600EC4F5A /* Language.swift in Sources */,
+				DD8CFD341C9F6BC3005F0C30 /* Lexicon_old.swift in Sources */,
+				DD182D451D0713D60051ACFA /* VocableProtocol.swift in Sources */,
 				DD242BFC1CA7615D00EC4F5A /* Dictionary.swift in Sources */,
-				DD242BE71CA38F1D00EC4F5A /* AnyVocableType.swift in Sources */,
-				DD242BDF1CA38E1D00EC4F5A /* AnyLanguage.swift in Sources */,
+				DD182D4D1D0744F40051ACFA /* Lexicon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
