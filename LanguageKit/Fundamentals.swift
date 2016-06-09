@@ -28,7 +28,7 @@ public typealias Synonyms = Set<Expression>
 public typealias SortedSynonyms = [Expression]
 
 /// A `Language` is simply supposed to represent the name of a language, in
-/// order to allow differentiation of types used in association (e.g.
+/// order to allow differentiation of types used in association with it (e.g.
 /// expressions).
 public typealias Language = String
 

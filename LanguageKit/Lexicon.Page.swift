@@ -26,9 +26,9 @@ extension Lexicon {
         /// A convenience method, to check if a given `Entry` satisfies all of
         /// the conditions needed, to be insertable into the `Page`'s `entires`.
         private func isInsertable(entry: Entry) -> Bool {
-            return !entries.contains(entry) &&
-                groups.contains(entry.group) &&
-                languages == entry.languages
+            return !entries.contains(entry)     &&
+                   groups.contains(entry.group) &&
+                   languages == entry.languages
         }
 
         /// Inserts the given `Entry` into the sorted list of `entries`.

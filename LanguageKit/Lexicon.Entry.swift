@@ -36,11 +36,11 @@ extension Lexicon.Entry: Comparable { }
 /// `Lexicon.Entry`s are considered equal, if all of their stored properties
 /// evaluate as equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    let equalGroup = lhs.group == rhs.group
-    let equalLanguages = lhs.languages == rhs.languages
-    let equalExpression = lhs.expression == rhs.expression
+    let equalGroup        = lhs.group        == rhs.group
+    let equalLanguages    = lhs.languages    == rhs.languages
+    let equalExpression   = lhs.expression   == rhs.expression
     let equalTranslations = lhs.translations == rhs.translations
-    let equalContext = lhs.context == rhs.context
+    let equalContext      = lhs.context      == rhs.context
 
     return equalGroup        &&
            equalLanguages    &&
