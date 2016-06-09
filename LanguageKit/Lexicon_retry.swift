@@ -18,7 +18,7 @@
 /// The result of inserting information into the lexicon, might therefore an
 /// increase in size of certain vocables, not an increase in the number of
 /// vocables.
-public struct Lexicon_ {
+public struct Lexicon_____ {
     // TEMPORARY
     public typealias V = Vocable
 

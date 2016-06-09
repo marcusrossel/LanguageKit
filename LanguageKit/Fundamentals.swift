@@ -6,16 +6,29 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-/// A set of words/phrases/etc. of the same meaning.
+/// A word or phrase.
+public typealias Expression = String
+
+/// A set of expressions similar or equal in meaning.
 ///
-/// - Warning: In the context of *LanguageKit* an `Expression` should not be
-/// used for words/phrases/etc. of multiple languages.
+/// * Warning: In the context of *LanguageKit* `Synonyms` should not be
+/// used for `Expression`s of multiple languages.
 ///
 ///       // Used as intended:
-///       let greeting: Expression = ["Hello", "Hi", "Hey"]
+///       let greeting: Synonyms = ["Hello", "Hi", "Hey"]
 ///
-///       // Used across multiple languages:
-///       let greeting: Expression = ["Hello", "Hallo", "Hei", "Olá"]
-public typealias Expression = Set<String>
+///       // Used across multiple languages (not used as intended):
+///       let greeting: Synonyms = ["Hello", "Hallo", "Hei", "Olá"]
+public typealias Synonyms = Set<Expression>
 
+/// A sorted version of `Synonyms`.
+///
+/// The `Expression`s in this data structure are not inherently sorted, but are
+/// rather promised to be by users of this type.
+public typealias SortedSynonyms = [Expression]
+
+/// A `Language` is simply supposed to represent the name of a language, in
+/// order to allow differentiation of types used in association (e.g.
+/// expressions).
 public typealias Language = String
+

@@ -18,7 +18,7 @@
 /// The result of inserting information into the lexicon, might therefore an
 /// increase in size of certain vocables, not an increase in the number of
 /// vocables.
-public struct Lexicon<V: VocableProtocol where V: Hashable> {
+public struct Lexicon___<V: VocableProtocol where V: Hashable> {
     private var _storage: Set<V> = []
 
     public mutating func insert(vocable vocable: V) {
