@@ -8,24 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		DD182D471D0713F50051ACFA /* Fundamentals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D461D0713F50051ACFA /* Fundamentals.swift */; };
-		DD182D491D07140A0051ACFA /* Vocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D481D07140A0051ACFA /* Vocable.swift */; };
+		DD182D491D07140A0051ACFA /* [ONLY FOR REFERENCE] Vocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D481D07140A0051ACFA /* [ONLY FOR REFERENCE] Vocable.swift */; };
 		DD182D4D1D0744F40051ACFA /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D4C1D0744F40051ACFA /* Lexicon.swift */; };
 		DD8CFD171C9F6B7D005F0C30 /* LanguageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD8CFD341C9F6BC3005F0C30 /* Lexicon_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8CFD2E1C9F6BC3005F0C30 /* Lexicon_old.swift */; };
-		DD8DF0541CAE1E44007FACAB /* Lexicon_retry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DF0531CAE1E44007FACAB /* Lexicon_retry.swift */; };
-		DDB3E2971D0958950085ED57 /* Vocable Subtypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E2961D0958950085ED57 /* Vocable Subtypes.swift */; };
+		DDB3E2991D09D3FC0085ED57 /* Lexicon.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */; };
+		DDB3E29B1D09D4080085ED57 /* Lexicon.Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DD182D461D0713F50051ACFA /* Fundamentals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fundamentals.swift; sourceTree = "<group>"; };
-		DD182D481D07140A0051ACFA /* Vocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vocable.swift; sourceTree = "<group>"; };
+		DD182D481D07140A0051ACFA /* [ONLY FOR REFERENCE] Vocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "[ONLY FOR REFERENCE] Vocable.swift"; sourceTree = "<group>"; };
 		DD182D4C1D0744F40051ACFA /* Lexicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.swift; sourceTree = "<group>"; };
 		DD8CFD131C9F6B7D005F0C30 /* LanguageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LanguageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageKit.h; sourceTree = "<group>"; };
 		DD8CFD181C9F6B7D005F0C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD8CFD2E1C9F6BC3005F0C30 /* Lexicon_old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon_old.swift; sourceTree = "<group>"; };
-		DD8DF0531CAE1E44007FACAB /* Lexicon_retry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon_retry.swift; sourceTree = "<group>"; };
-		DDB3E2961D0958950085ED57 /* Vocable Subtypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Vocable Subtypes.swift"; sourceTree = "<group>"; };
+		DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Entry.swift; sourceTree = "<group>"; };
+		DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Page.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,23 +57,14 @@
 			isa = PBXGroup;
 			children = (
 				DD182D461D0713F50051ACFA /* Fundamentals.swift */,
-				DD182D481D07140A0051ACFA /* Vocable.swift */,
-				DDB3E2961D0958950085ED57 /* Vocable Subtypes.swift */,
+				DD182D481D07140A0051ACFA /* [ONLY FOR REFERENCE] Vocable.swift */,
 				DD182D4C1D0744F40051ACFA /* Lexicon.swift */,
-				DDD69D881CF7251C0061FCAE /* Value Types */,
+				DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */,
+				DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */,
 				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
 			);
 			path = LanguageKit;
-			sourceTree = "<group>";
-		};
-		DDD69D881CF7251C0061FCAE /* Value Types */ = {
-			isa = PBXGroup;
-			children = (
-				DD8CFD2E1C9F6BC3005F0C30 /* Lexicon_old.swift */,
-				DD8DF0531CAE1E44007FACAB /* Lexicon_retry.swift */,
-			);
-			name = "Value Types";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,11 +147,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD182D491D07140A0051ACFA /* Vocable.swift in Sources */,
+				DDB3E2991D09D3FC0085ED57 /* Lexicon.Entry.swift in Sources */,
+				DD182D491D07140A0051ACFA /* [ONLY FOR REFERENCE] Vocable.swift in Sources */,
 				DD182D471D0713F50051ACFA /* Fundamentals.swift in Sources */,
-				DD8DF0541CAE1E44007FACAB /* Lexicon_retry.swift in Sources */,
-				DD8CFD341C9F6BC3005F0C30 /* Lexicon_old.swift in Sources */,
-				DDB3E2971D0958950085ED57 /* Vocable Subtypes.swift in Sources */,
+				DDB3E29B1D09D4080085ED57 /* Lexicon.Page.swift in Sources */,
 				DD182D4D1D0744F40051ACFA /* Lexicon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
