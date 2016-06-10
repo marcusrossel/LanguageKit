@@ -42,12 +42,15 @@ extension Lexicon {
         public mutating func insert(entry newEntry: Entry) -> Bool {
             guard isInsertable(newEntry) else { return false }
 
-            for (index, entry) in entries.enumerate() {
+            for (index, entry) in entries.dropLast().enumerate() {
                 if newEntry.expression > entry.expression {
                     entries.insert(newEntry, atIndex: index)
                     return true
                 }
             }
+
+            entries.append(newEntry)
+            return true
         }
 
         /// Inserts the given sequence of `Entry`s into the sorted list of
