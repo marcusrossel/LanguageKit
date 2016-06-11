@@ -117,7 +117,7 @@ public func ==(lhs: Lexicon.Entry.Group, rhs: Lexicon.Entry.Group) -> Bool {
 }
 
 extension Lexicon.Entry.Group: Comparable { }
-/// `Lexicon.Entry.Group`s compare lexogrphically by their `title`.
+/// `Lexicon.Entry.Group`s compare lexographically by their `title`.
 public func <(lhs: Lexicon.Entry.Group, rhs: Lexicon.Entry.Group) -> Bool {
     return lhs.title < rhs.title
 }
