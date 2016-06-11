@@ -12,7 +12,7 @@ extension Lexicon {
         /// A set storing all of the `Entry.Group`s, which the `Page`'s `Entry`s
         /// belong to. An empty set, means that no specific `Entry.Group` was
         /// selected.
-        public private(set) var groups = Set<Entry.Group>()
+        public private(set) var groups = Set<Expression.Group>()
 
         /// This property stores the respective `Language`s of the expressions
         /// and translations of the `entries` for this `Page`.
@@ -27,7 +27,7 @@ extension Lexicon {
         /// the conditions needed, to be insertable into the `Page`'s `entires`.
         private func canInsert(entry: Entry) -> Bool {
             return !entries.contains(entry)     &&
-                   groups.contains(entry.group) &&
+                   groups.contains(entry.expression.group) &&
                    languages == entry.languages
         }
 
@@ -69,17 +69,17 @@ extension Lexicon {
             return insertables.count
         }
 
-        public init(languages: (expressions: Language, translations: Language), groups: Set<Entry.Group> = []) {
+        public init(languages: (expressions: Language, translations: Language), groups: Set<Expression.Group> = []) {
             self.languages = languages
             self.groups = groups
         }
 
         /// Initializes the `Page` using every `Entry` in `entries`, that is of
         /// the given `languages`, and in the given set of `groups`.
-        public init<S: SequenceType where S.Generator.Element == Entry>(languages: (expressions: Language, translations: Language), groups: Set<Entry.Group> = [], entries: S) {
+        public init<S: SequenceType where S.Generator.Element == Entry>(languages: (expressions: Language, translations: Language), groups: Set<Expression.Group> = [], entries: S) {
             self.init(languages: languages, groups: groups)
             self.entries = entries.filter { entry in
-                entry.languages == languages && groups.contains(entry.group)
+                entry.languages == languages && groups.contains(entry.expression.group)
             }
         }
     }

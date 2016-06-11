@@ -13,32 +13,30 @@ extension Lexicon.Entry {
 /*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*SKETCH*/
 extension Lexicon {
     internal struct LinkedEntry /*LinkableEntry;Vocable*/ {
-        var pool: [Language: (synonyms: Synonyms, context: String)]
-        var group: Entry.Group
+        var pool: [(Expression, context: String)]
 
         func merge(with: Entry, byLink link: Entry.Link) {
             // do stuff
         }
 
         init(entry: Entry) {
-            group = entry.group
-            var protoPool = [Language: (synonyms: Synonyms, context: String)]()
-            protoPool[entry.languages.expression] = ([entry.expression], entry.context.expression)
-            protoPool[entry.languages.translations] = (Synonyms(language: entry.translations), entry.context.translations)
-            pool = protoPool
+            pool = []
         }
     }
 }
 
-// Entry = "Word" :: ("live" : "Englisch") :: (["leben", "wohnen", "siedeln"] : "German") :: "It's a weird word."
-// Entry = "Word" :: ("bor" : "Norwegian") :: (["live", "reside"] : "English") :: ""
+// Entry = ("live" : "English" : "Word") :: (["leben", "wohnen", "siedeln"] :[]: "German" :[]: "Word") :: "XYZ"
+// Entry = ("bor" : "Norwegian" : "Word") :: (["live", "reside"] : "English" : "Word") :: ""
 //
 // *merge*
 //
-// LinkedEntry = "Word" :: ()
+// LinkedEntry = [(("live"    : "English"   : "Word"), "YXZ"),
+//                (("reside"  : "English"   : "Word"), ""   ),
+//                (("leben"   : "German"    : "Word"), ""   ),
+//                (("wohnen"  : "German"    : "Word"), ""   ),
+//                (("siedeln" : "German"    : "Word"), ""   ),
+//                (("bor"     : "Norwegian" : "Word"), ""   )]
 //
 //
-//
-//
-//
+// *extract entries* (from: "English", "Word", to: "Norwegian")
 //
