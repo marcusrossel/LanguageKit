@@ -25,7 +25,7 @@ extension Lexicon {
 
         /// A convenience method, to check if a given `Entry` satisfies all of
         /// the conditions needed, to be insertable into the `Page`'s `entires`.
-        private func isInsertable(entry: Entry) -> Bool {
+        private func canInsert(entry: Entry) -> Bool {
             return !entries.contains(entry)     &&
                    groups.contains(entry.group) &&
                    languages == entry.languages
@@ -40,7 +40,7 @@ extension Lexicon {
         /// * Returns: A `Bool` indicating whether `entry` was succesfully
         /// inserted.
         public mutating func insert(entry newEntry: Entry) -> Bool {
-            guard isInsertable(newEntry) else { return false }
+            guard canInsert(newEntry) else { return false }
 
             for (index, entry) in entries.dropLast().enumerate() {
                 if newEntry.expression > entry.expression {
@@ -64,12 +64,23 @@ extension Lexicon {
         /// protocol, whose elements are `Entry`s.
         /// * Returns: The number of `Entry`s that were succesfully inserted.
         public mutating func insert<S: SequenceType where S.Generator.Element == Entry>(entries newEntries: S) -> Int {
-            let insertables = newEntries.filter { entry in isInsertable(entry) }
-
-            entries += insertables
-            entries.sortInPlace(<)
-            
+            let insertables = newEntries.filter(canInsert)
+            entries = (entries + insertables).sort()
             return insertables.count
+        }
+
+        public init(languages: (expressions: Language, translations: Language), groups: Set<Entry.Group> = []) {
+            self.languages = languages
+            self.groups = groups
+        }
+
+        /// Initializes the `Page` using every `Entry` in `entries`, that is of
+        /// the given `languages`, and in the given set of `groups`.
+        public init<S: SequenceType where S.Generator.Element == Entry>(languages: (expressions: Language, translations: Language), groups: Set<Entry.Group> = [], entries: S) {
+            self.init(languages: languages, groups: groups)
+            self.entries = entries.filter { entry in
+                entry.languages == languages && groups.contains(entry.group)
+            }
         }
     }
 }
