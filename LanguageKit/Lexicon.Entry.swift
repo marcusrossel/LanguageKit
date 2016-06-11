@@ -20,11 +20,11 @@ extension Lexicon {
     /// behavior is desired, one should consider creating a new `Entry`.
     ///
     /// An `Entry`'s `translations` can be modified, but will have the same
-    /// `language` across the entire lifetime of an `Entry`.
+    /// `Language` across the entire lifetime of an `Entry`.
     ///
     /// Therefore an `Entry` does not store its `Language`s explicitly, but
     /// rather implicitly in its `expression` and `translations`. This method is
-    /// viable, as these properties can never change their `language` once set.
+    /// viable, as these properties can never change their `Language` once set.
     public struct Entry {
         public let group: Group
 
@@ -34,6 +34,10 @@ extension Lexicon {
         /// This property can be used to store some context about an `Entry`'s
         /// `expression`.
         public var context = ""
+
+        public var languages: (expression: Language, translations: Language) {
+            return (expression.language, translations.language)
+        }
 
         /// Inserts the given `Expression` into the `Entry`'s `translations`.
         ///

@@ -14,6 +14,7 @@
 		DDB3E29B1D09D4080085ED57 /* Lexicon.Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */; };
 		DDB3E29D1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */; };
 		DDB3E29F1D0C299A0085ED57 /* Synonyms.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */; };
+		DDB3E2A11D0C6CE40085ED57 /* Lexicon.Entry.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E2A01D0C6CE40085ED57 /* Lexicon.Entry.Group.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Page.swift; sourceTree = "<group>"; };
 		DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.LinkedEntry.swift; sourceTree = "<group>"; };
 		DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synonyms.swift; sourceTree = "<group>"; };
+		DDB3E2A01D0C6CE40085ED57 /* Lexicon.Entry.Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Entry.Group.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +62,11 @@
 			children = (
 				DD182D461D0713F50051ACFA /* Primitives.swift */,
 				DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */,
-				DD182D4C1D0744F40051ACFA /* Lexicon.swift */,
-				DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */,
+				DDB3E2A01D0C6CE40085ED57 /* Lexicon.Entry.Group.swift */,
 				DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */,
 				DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */,
+				DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */,
+				DD182D4C1D0744F40051ACFA /* Lexicon.swift */,
 				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
 			);
@@ -152,6 +155,7 @@
 			files = (
 				DDB3E2991D09D3FC0085ED57 /* Lexicon.Entry.swift in Sources */,
 				DDB3E29F1D0C299A0085ED57 /* Synonyms.swift in Sources */,
+				DDB3E2A11D0C6CE40085ED57 /* Lexicon.Entry.Group.swift in Sources */,
 				DD182D471D0713F50051ACFA /* Primitives.swift in Sources */,
 				DDB3E29B1D09D4080085ED57 /* Lexicon.Page.swift in Sources */,
 				DDB3E29D1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift in Sources */,

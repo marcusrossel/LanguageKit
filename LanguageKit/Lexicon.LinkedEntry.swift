@@ -24,8 +24,21 @@ extension Lexicon {
             group = entry.group
             var protoPool = [Language: (synonyms: Synonyms, context: String)]()
             protoPool[entry.languages.expression] = ([entry.expression], entry.context.expression)
-            protoPool[entry.languages.translations] = (Synonyms(entry.translations), entry.context.translations)
+            protoPool[entry.languages.translations] = (Synonyms(language: entry.translations), entry.context.translations)
             pool = protoPool
         }
     }
 }
+
+// Entry = "Word" :: ("live" : "Englisch") :: (["leben", "wohnen", "siedeln"] : "German") :: "It's a weird word."
+// Entry = "Word" :: ("bor" : "Norwegian") :: (["live", "reside"] : "English") :: ""
+//
+// *merge*
+//
+// LinkedEntry = "Word" :: ()
+//
+//
+//
+//
+//
+//
