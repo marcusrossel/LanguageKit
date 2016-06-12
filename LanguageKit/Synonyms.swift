@@ -43,9 +43,10 @@ public struct Synonyms {
 
     /// This initializer discardes all `Expression`s in `expressions`, that are
     /// not of the given `language`.
-    public init
-        <S: SequenceType where S.Generator.Element == Expression>
-        (expressions: S, language: Language) {
+    public init<S: SequenceType where S.Generator.Element == Expression>(
+        expressions: S,
+        language: Language
+    ) {
         self.init(language: language)
         self.expressions = expressions.sort().filter { expression in
             expression.language == language
@@ -55,9 +56,10 @@ public struct Synonyms {
 
 /// Inserts all of the `Expression`s, that share the `Language` of target and
 /// are not already contained in these `Synonmys`.
-public func +=
-    <S: SequenceType where S.Generator.Element == Expression>
-    (inout synonyms: Synonyms, expressions: S) {
+public func +=<S: SequenceType where S.Generator.Element == Expression>(
+    inout synonyms: Synonyms,
+    expressions: S
+) {
     let uniqueExpressions = Set(synonyms.expressions + expressions)
     let relevantExpressions = uniqueExpressions.filter { expression in
         expression.language == synonyms.language
@@ -66,9 +68,10 @@ public func +=
     synonyms.expressions = relevantExpressions.sort()
 }
 
-public func -=
-    <S: SequenceType where S.Generator.Element == Expression>
-    (inout synonyms: Synonyms, expressions: S) {
+public func -=<S: SequenceType where S.Generator.Element == Expression>(
+    inout synonyms: Synonyms,
+    expressions: S
+) {
     synonyms.expressions = synonyms.expressions.filter { expression in
         !expressions.contains(expression)
     }

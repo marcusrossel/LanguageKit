@@ -74,9 +74,10 @@ extension Lexicon {
 ///
 /// * Note: Only `Expression`s whose `language` equals the `Entry`'s
 /// `translations`' `language`, will be insertable.
-public func +=
-    <S: SequenceType where S.Generator.Element == Expression>
-    (inout entry: Lexicon.Entry, translations: S) {
+public func +=<S: SequenceType where S.Generator.Element == Expression>(
+    inout entry: Lexicon.Entry,
+    translations: S
+) {
     // Checks if the given sequence is of type `Synonyms` to allow for more
     // efficient insertion.
     if entry.translations.isEmpty,
@@ -89,9 +90,10 @@ public func +=
 }
 
 /// Removes the given `Expression`s from the `Entry`s `translations`.
-public func -=
-    <S: SequenceType where S.Generator.Element == Expression>
-    (inout entry: Lexicon.Entry, translations: S) {
+public func -=<S: SequenceType where S.Generator.Element == Expression>(
+    inout entry: Lexicon.Entry,
+    translations: S
+) {
     entry.translations -= translations
 }
 
