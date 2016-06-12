@@ -11,8 +11,6 @@ extension Lexicon {
     /// expression in a dictionary. It consists of:
     /// - an `expression`, by which one would usually find an entry.
     /// - multiple `translations` of the `expression` in a different language.
-    /// - some `context`, which can be used to describe something about the
-    /// `expression`.
     ///
     /// Once an `Entry` is initialized you can not change its `expression`, as 
     /// this property is fundametal to an `Entry`. If this behavior is desired,
@@ -32,12 +30,12 @@ extension Lexicon {
         public let expression: Expression
         public private(set) var translations: Synonyms
 
-        /// This property can be used to store some context about an `Entry`'s
-        /// `expression`.
-        public var context = ""
-
         public var languages: (expression: Language, translations: Language) {
             return (expression.language, translations.language)
+        }
+
+        public var context: String? {
+            return expression.context
         }
 
         /// Inserts the given `Expression` into the `Entry`'s `translations`.
@@ -59,7 +57,6 @@ extension Lexicon {
                     context: String = "") {
             self.expression = expression
             self.translations = translations
-            self.context = context
         }
 
         public init(expression: Expression, translationLanguage: Language,
@@ -102,25 +99,22 @@ extension Lexicon.Entry: Equatable { }
 /// `Lexicon.Entry`s are considered equal, if all of their stored properties
 /// evaluate as equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    let equalExpression   = lhs.expression   == rhs.expression
-    let equalTranslations = lhs.translations == rhs.translations
-    let equalContext      = lhs.context      == rhs.context
+    return lhs.expression   == rhs.expression &&
+           lhs.translations == rhs.translations
+}
 
-    return equalExpression   &&
-           equalTranslations &&
-           equalContext
+extension Lexicon.Entry: Hashable {
+    public var hashValue: Int {
+        let strings = [expression.value] + translations.map { expression in
+            expression.value
+        }
+
+        return String(strings).hashValue
+    }
 }
 
 extension Lexicon.Entry: Comparable { }
-/// `Lexicon.Entry`s are compared on two levels:
-/// - If the `Lexicon.Entry`s `expression`s differ, they will be compared
-/// lexographically.
-/// - If the `Lexicon.Entry`s `expression`s do not differ, the `context`s will
-/// be compared lexographically instead.
+/// `Lexicon.Entry`s are compared by their `expression` property.
 public func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    if lhs.expression != rhs.expression {
-        return lhs.expression < rhs.expression
-    } else {
-        return lhs.context < rhs.context
-    }
+    return lhs.expression < rhs.expression
 }

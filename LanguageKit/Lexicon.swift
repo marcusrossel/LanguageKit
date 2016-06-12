@@ -7,9 +7,6 @@
 //
 
 public struct Lexicon {
-    private var storage = Set<Int/*some storage type*/>()
+    private var storage = Set<Entry>()
 
-    /*public subscript(origin: Language, destination: Language, groups: Set<Entry.Group>) -> Page {
-
-    }*/
 }

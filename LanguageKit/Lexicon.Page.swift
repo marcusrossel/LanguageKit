@@ -6,6 +6,8 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
+// CLEANUP THIS TYPE
+
 extension Lexicon {
     /// * TODO: Describe this type.
     public struct Page {

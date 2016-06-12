@@ -21,16 +21,16 @@ public struct Language {
     }
 }
 
-extension Language: Hashable {
-    public var hashValue: Int {
-        return title.hashValue
-    }
-}
-
 extension Language: Equatable { }
 /// `Language`s are considered equal, if their `title`s evaluate as equal.
 public func ==(lhs: Language, rhs: Language) -> Bool {
     return lhs.title == rhs.title
+}
+
+extension Language: Hashable {
+    public var hashValue: Int {
+        return title.hashValue
+    }
 }
 
 extension Language: Comparable { }
@@ -46,20 +46,16 @@ public struct Expression {
     public let value: String
     public let group: Group
     public let language: Language
+    public var context: String?
 
     /// * Note: This initializer fails, if passed an empty `String`.
-    public init!(_ value: String, in language: Language, group: Group) {
+    public init!(_ value: String, in language: Language, group: Group,
+                 context: String? = nil) {
         guard !value.isEmpty else { return nil }
-        self.value = value
-        self.group = group
+        self.value    = value
+        self.group    = group
         self.language = language
-    }
-}
-
-extension Expression: Hashable {
-    public var hashValue: Int {
-        // Removing the space would lead to more hash collisions.
-        return "\(value) \(group) \(language)".hashValue
+        self.context  = context
     }
 }
 
@@ -67,9 +63,17 @@ extension Expression: Equatable { }
 /// `Expression`s are considered equal, if all of their stored properties
 /// evaluate as equal.
 public func ==(lhs: Expression, rhs: Expression) -> Bool {
-    return lhs.value == rhs.value &&
-           lhs.group == rhs.group &&
-           lhs.language == rhs.language
+    return lhs.value    == rhs.value    &&
+           lhs.group    == rhs.group    &&
+           lhs.language == rhs.language &&
+           lhs.context  == rhs.context
+}
+
+extension Expression: Hashable {
+    public var hashValue: Int {
+        // Removing the space would lead to more hash collisions.
+        return "\(value) \(group) \(language) \(context)".hashValue
+    }
 }
 
 extension Expression: Comparable { }
@@ -111,17 +115,17 @@ extension Expression {
     }
 }
 
-extension Expression.Group: Hashable {
-    public var hashValue: Int {
-        return title.hashValue
-    }
-}
-
 extension Expression.Group: Equatable { }
 /// `Expression.Group`s are considered equal, if their `title`s evaluate as
 /// equal.
 public func ==(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
     return lhs.title == rhs.title
+}
+
+extension Expression.Group: Hashable {
+    public var hashValue: Int {
+        return title.hashValue
+    }
 }
 
 extension Expression.Group: Comparable { }
