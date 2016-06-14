@@ -1,5 +1,5 @@
 //
-//  Synonyms.swift
+//  Synoset.swift
 //  LanguageKit
 //
 //  Created by Marcus Rossel on 11.06.16.
@@ -8,17 +8,14 @@
 
 /// An ordered set of `Expression`s of the same language, similar or equal in
 /// meaning.
-public struct Synonyms {
+public struct Synoset {
   /// An ordered set of synonymous expressions.
   ///
   /// - Note: Although an `Array` is used, all `Expressions` are unique.
   public private(set) var synonyms: [Expression]
 
   /// The `Language` of the `Expressions` in `self`.
-  public var language: Language {
-    // `expressions` can never be empty, therefore `first` always exists.
-    return synonyms.first!.language
-  }
+  public let language: Language
 
   /// Returns `true` if `expression` meets the conditions for being inserted
   /// into `synonyms`.
@@ -28,10 +25,9 @@ public struct Synonyms {
 
   /// Tries to inserts the given `Expression`.
   //
-  /// - Precondition: The given `Expression` must be of the same language as
-  /// the ones already contained in `self`.
+  /// - Precondition: The given `Expression` must be of the same `language`.
   ///
-  /// * Returns: A `Bool` indicating whether insertion was successful.
+  /// - Returns: A `Bool` indicating whether insertion was successful.
   @discardableResult
   public mutating func insert(_ expression: Expression) -> Bool {
     guard canInsert(expression) else { return false }
@@ -52,15 +48,12 @@ public struct Synonyms {
     return true
   }
 
-  /// Tries to remove the given `synonym` from `self`.
+  /// Removes the given `synonym` from `self`.
   ///
-  /// - Precondition: `self` must hold at least two `Expression`s.
-  ///
-  /// * Returns: A `Bool` indicating whether removal was successful.
+  /// - Returns: A `Bool` indicating whether `synonym` was even contained in
+  /// `self`.
   @discardableResult
   public mutating func remove(_ synonym: Expression) -> Bool {
-    guard synonyms.count > 1 else { return false }
-
     // Tries to find the `index` of `synonym` in `synonyms`.
     if let index = synonyms.index(of: synonym) {
       synonyms.remove(at: index)
@@ -70,66 +63,60 @@ public struct Synonyms {
     }
   }
 
-  /// Tries to swap the given `synonym` for a `newSynonym`.
-  ///
-  /// - Precondition: 
-  ///   * `self` must contain `synonym`.
-  ///   * If `self` holds more than one `Expression`, the new `expression` must
-  ///     be of the same language as the old `synonym`.
-  ///
-  /// * Returns: A `Bool` indicating whether the swap was successful.
-  @discardableResult
-  public mutating func swap(_ synonym: Expression, for expression: Expression) -> Bool {
-    guard synonyms.contains(synonym) else { return false }
-
-    if synonyms.count == 1 {
-      synonyms[synonyms.startIndex] = expression
-    } else {
-      if expression.language == language {
-        if let index = synonyms.index(of: synonym) {
-          synonyms[index] = expression
-        }
-      }
-    }
-
-    return true
-  }
-
   /// Discardes all `Expression`s in `expressions`, that are not of the given
   /// `language`.
   ///
-  /// - Note: If `expressions` contains no `Expression`s of the given
-  /// `language`, initialization fails.
+  /// - Note:
+  /// If `expressions` contains no `Expression`s of the given `language`,
+  /// initialization fails.
   public init!<S: Sequence where S.Iterator.Element == Expression>(
     expressions: S,
     language: Language
   ) {
+    self.language = language
     synonyms = expressions.sorted().filter { expression in
       expression.language == language
     }
   }
+
+  /// Initializes `self` based on the `Language` of the first `Expression` in
+  /// the given sequence.
+  ///
+  /// - Note:
+  /// Based on the assumption that all `Expression`s are of the same language,
+  /// this removes the need to explicitly supply the language.
+  public init!<S: Sequence where S.Iterator.Element == Expression>(
+    expressions: S
+  ) {
+    guard let firstExpression = Array(expressions).first else { return nil }
+    self.init(expressions: expressions, language: firstExpression.language)
+  }
 }
 
-/// Inserts all of the `Expression`s that share the `language` of the `target`
-/// and are not already contained in these `Synonmys`.
+/// Inserts all of the `Expression`s that share the `language` of the `synoset`
+/// and are not already contained its `synonmys`.
 public func +=<S: Sequence where S.Iterator.Element == Expression>(
-    target: inout Synonyms,
+    synoset: inout Synoset,
     expressions: S
 ) {
   let insertables = expressions.filter { expression -> Bool in
-    target.canInsert(expression)
+    synoset.canInsert(expression)
   }
 
-  target.synonyms = (target.synonyms + insertables).sorted()
+  synoset.synonyms = (synoset.synonyms + insertables).sorted()
 }
 
-extension Synonyms : Equatable { }
-/// `Synonyms` are considered equal iff their `synonyms` are equal.
-public func ==(lhs: Synonyms, rhs: Synonyms) -> Bool {
+extension Synoset : Equatable { }
+/// `Synoset`s are considered equal iff their `synonyms` are equal.
+///
+/// - Note:
+/// The 'language' property doesn't have to be considered, as it is contained
+/// within `synonyms` anyway.
+public func ==(lhs: Synoset, rhs: Synoset) -> Bool {
   return lhs.synonyms == rhs.synonyms
 }
 
-extension Synonyms : Collection {
+extension Synoset : Collection {
   public typealias Index = Array<Expression>.Index
   public typealias SubSequence = Array<Expression>.SubSequence
 
