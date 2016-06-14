@@ -7,40 +7,31 @@
 //
 
 extension Lexicon {
-    /// An `Entry` represents the thing you would find when looking up an
-    /// expression in a dictionary. It consists of:
-    /// - an `expression`, by which one would usually find an entry.
-    /// - multiple `translations` of the `expression` in a different language.
-    ///
-    /// Once an `Entry` is initialized you can not change its `expression`, as 
-    /// this property is fundametal to an `Entry`. If this behavior is desired,
-    /// one should consider creating a new `Entry`.
-    ///
-    /// An `Entry`'s `translations` can be modified, but will have the same
-    /// `Language` across the entire lifetime of an `Entry`.
-    ///
-    /// Therefore an `Entry` does not store its `Language`s explicitly, but
-    /// rather implicitly in its `expression` and `translations`. This method is
-    /// viable, as these properties can never change their `Language` once set.
-    ///
-    /// An `Entry` does not have a fixed `Expression.Group` it enforces, as some
-    /// multi-word expressions can be translated as one word in other languages,
-    /// or vice versa.
-    public struct Entry {
-        public let expression: Expression
-        public private(set) var translations: Synonyms
+  /// Represents the thing you would find when looking up an expression in a 
+  /// dictionary.
+  ///
+  /// It consists of:
+  /// * an `expression`, by which one would usually find an entry.
+  /// * multiple `translations` of the `expression` in a different language.
+  ///
+  /// - Note:
+  /// Once an `Entry` is initialized you can not change its `expression`, as
+  /// this property is fundametal to an `Entry`. If this behavior is desired,
+  /// one should consider creating a new `Entry`.
+  ///
+  /// An `Entry`'s `translations` can be modified, but will have the same
+  /// `Language` across the entire lifetime of an `Entry`.
+  ///
+  /// Therefore an `Entry` does not store its `Language`s explicitly, but
+  /// rather implicitly in its `expression` and `translations`. This method is
+  /// viable, as these properties can never change their `Language` once set.
+  public struct Entry {
+    public let expression: Expression
+    public private(set) var translations: Synonyms
 
-        public var languages: (expression: Language, translations: Language) {
-            return (expression.language, translations.language)
-        }
-
-        public var context: String? {
-            return expression.context
-        }
-
-        internal var flipped: [Entry] {
-            let oldExpression = Synonyms(expressions: [expression],
-                                         language: expression.language)
+    internal var flipped: [Entry] {
+      let oldExpression = Synonyms(expressions: [expression],
+                                   language: expression.language)
 
             return translations.map { translation in
                 return Entry(expression: translation,

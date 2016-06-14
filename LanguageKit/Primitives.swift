@@ -114,9 +114,9 @@ extension Expression : Hashable {
 
 extension Expression : Comparable { }
 /// `Expression`s are compared on three levels:
-/// - If the `value`s differ, they will be compared.
-/// - If the `value`s do not differ, the `language`s will be compared.
-/// - If the `language`s do not differ either, the `group`s will be compared.
+/// * If the `value`s differ, they will be compared.
+/// * If the `value`s do not differ, the `language`s will be compared.
+/// * If the `language`s do not differ either, the `group`s will be compared.
 public func <(lhs: Expression, rhs: Expression) -> Bool {
   if lhs.value != rhs.value {
     return lhs.value < rhs.value
