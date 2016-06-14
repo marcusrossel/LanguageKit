@@ -7,114 +7,111 @@
 //
 
 extension Lexicon {
-    /// An `Entry` represents the thing you would find when looking up an
-    /// expression in a dictionary. It consists of:
-    /// - a `group` it belongs to.
-    /// - an `expression`, by which one would usually find an entry.
-    /// - multiple `translations` of the `expression` in a different language.
-    /// - some `context`, which can be used to describe something about the
-    /// `expression`.
+  /// Represents the thing you would find when looking up an expression in a 
+  /// dictionary.
+  ///
+  /// It consists of:
+  /// * an `expression`, by which one would usually find an entry.
+  /// * multiple `translations` of the `expression` in a different language.
+  ///
+  /// - Note:
+  /// Once an `Entry` is initialized you can not change its `expression`, as
+  /// this property is fundametal to an `Entry`. If this behavior is desired,
+  /// one should consider creating a new `Entry`.
+  ///
+  /// An `Entry`'s `translations` can be modified, but will have the same
+  /// `Language` across the entire lifetime of an `Entry`.
+  ///
+  /// Therefore an `Entry` does not store its `Language`s explicitly, but
+  /// rather implicitly in its `expression` and `translations`. This method is
+  /// viable, as these properties can never change their `Language` once set.
+  public struct Entry {
+    public let head: Expression
+    public private(set) var translations: Synoset
+
+    /// Returns a set of *flipped* `Entry`s.
     ///
-    /// Once an `Entry` is initialized you can not change it's `group` or
-    /// `expression`, as these properties are fundametal to an `Entry`. If this
-    /// behavior is desired, one should consider creating a new `Entry`.
+    /// An `Entry` is *flipped*, by changing its `head` and `translations`. As
+    /// there can be multiple `translations`, a flip can produce multiple
+    /// `Entry`s.
     ///
-    /// An `Entry`'s `translations` can be modified, but will have the same
-    /// `Language` across the entire lifetime of an `Entry`.
+    /// - Note:
+    /// An empty set is returned if `translations` is empty.
     ///
-    /// Therefore an `Entry` does not store its `Language`s explicitly, but
-    /// rather implicitly in its `expression` and `translations`. This method is
-    /// viable, as these properties can never change their `Language` once set.
-    public struct Entry {
-        public let group: Group
+    /// This method is optimized for the case that `translations` is empty.
+    public func flipped() -> Set<Entry> {
+      // Optimizations.
+      guard !translations.isEmpty else { return [] }
 
-        public let expression: Expression
-        public private(set) var translations: Synonyms
+      let headSynoset = Synoset(expression: head)
+      let flippedEntries = translations.map { (translation) -> Entry in
+        return Entry(head: translation, translations: headSynoset)
+      }
 
-        /// This property can be used to store some context about an `Entry`'s
-        /// `expression`.
-        public var context = ""
-
-        public var languages: (expression: Language, translations: Language) {
-            return (expression.language, translations.language)
-        }
-
-        /// Inserts the given `Expression` into the `Entry`'s `translations`.
-        ///
-        /// * Note: Insertion will only be successful if the `Expression`'s
-        /// `language` equals the `translations`' `language`.
-        ///
-        /// * Returns: A `Bool` indicating if insertion was successful.
-        public mutating func insert(translation: Expression) -> Bool {
-            return translations.insert(translation)
-        }
-
-        /// Removes the given `Expression` from the `Entry`'s `translations`.
-        public mutating func remove(translation: Expression) {
-            translations.remove(translation)
-        }
-
-        public init(group: Group, expression: Expression,
-                    translations: Synonyms, context: String = "") {
-            self.group = group
-            self.expression = expression
-            self.translations = translations
-            self.context = context
-        }
-
-        public init(group: Group, expression: Expression,
-                    translationLanguage: Language) {
-            self.init(
-                group: group,
-                expression: expression,
-                translations: Synonyms(language: translationLanguage)
-            )
-        }
+      return Set(flippedEntries)
     }
+
+    /// Inserts the given `expression` into the `translations` `Synoset`.
+    ///
+    /// - Returns:
+    /// A `Bool` indicating if insertion was successful.
+    ///
+    /// - Note:
+    /// Insertion will only be successful if the `expression`'s language equals
+    /// the `translations`' language.
+    public mutating func insert(expression: Expression) -> Bool {
+      return translations.insert(expression)
+    }
+
+    /// Removes the given `translation` from `translations`.
+    public mutating func remove(translation: Expression) {
+      translations.remove(translation)
+    }
+
+    public init(head: Expression, translations: Synoset) {
+      self.head = head
+      self.translations = translations
+    }
+  }
 }
 
-/// Tries to insert the given `Expression`s into the `Entry`s `translations`.
+/// Tries to insert the given `Expression`s into `entry`s `translations`.
 ///
-/// * Note: Only `Expression`s whose `language` equals the `Entry`'s
-/// `translations`' `language`, will be insertable.
-public func +=
-    <S: SequenceType where S.Generator.Element == Expression>
-    (inout entry: Lexicon.Entry, translations: S) {
-    // Checks if the given sequence is of type `Synonyms` to allow for more
-    // efficient insertion.
-    if entry.translations.isEmpty,
-       let synonyms = translations as? Synonyms
-       where synonyms.language == entry.translations.language {
-        entry.translations = synonyms
-    } else {
-        entry.translations += translations
-    }
+/// - Note:
+/// Only `Expression`s whose language equals the `entry`'s `translations`'
+/// language will be insertable.
+///
+/// This function is optimized for the case that either parameter's sequence is
+/// empty, that the languages do not match, and that `expression` is of type
+/// `Synoset`.
+public func +=<S: Sequence where S.Iterator.Element == Expression>(
+    entry: inout Lexicon.Entry,
+    expressions: S
+) {
+  // Optimization is performed by the `+=` operator.
+  entry.translations += expressions
 }
 
-/// Removes the given `Expression`s from the `Entry`s `translations`.
-public func -=
-    <S: SequenceType where S.Generator.Element == Expression>
-    (inout entry: Lexicon.Entry, translations: S) {
-    entry.translations -= translations
-}
-
-extension Lexicon.Entry: Equatable { }
-/// `Lexicon.Entry`s are considered equal, if all of their stored properties
-/// evaluate as equal.
+extension Lexicon.Entry : Equatable { }
+/// `Lexicon.Entry`s are considered equal iff all of their stored properties
+/// are equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    let equalGroup        = lhs.group        == rhs.group
-    let equalExpression   = lhs.expression   == rhs.expression
-    let equalTranslations = lhs.translations == rhs.translations
-    let equalContext      = lhs.context      == rhs.context
-
-    return equalGroup        &&
-           equalExpression   &&
-           equalTranslations &&
-           equalContext
+  return lhs.head         == rhs.head &&
+         lhs.translations == rhs.translations
 }
 
-extension Lexicon.Entry: Comparable { }
-/// `Lexicon.Entry`s are ordered lexographically by their `expression` property.
+extension Lexicon.Entry : Hashable {
+  public var hashValue: Int {
+    let strings = [head.text] + translations.map { expression -> String in
+      return head.text
+    }
+
+    return "\(strings)".hashValue
+  }
+}
+
+extension Lexicon.Entry : Comparable { }
+/// `Lexicon.Entry`s are compared by their `head` property.
 public func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    return lhs.expression < rhs.expression
+  return lhs.head < rhs.head
 }

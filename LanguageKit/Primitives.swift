@@ -6,78 +6,171 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-/// A `Language` is simply supposed to represent the name of a language, in
-/// order to allow differentiation of types used in association with it (e.g.
-/// expressions).
+/// Represents the name of a language.
 ///
-/// * Note: A `Language` can not be initialized with an empty `String`.
+/// Could be used to allow differentiation of types used in association with it.
+///
+/// - Note:
+/// A `Language` is to be used as a pure value, hence it is intrinsically
+/// immutable.
 public struct Language {
+  /// The name/title of the `Language`.
+  public let title: String
+
+  /// Initializes an instance directly from the given `title`.
+  ///
+  /// - Parameter title:
+  /// The name/title of the `Language`.
+  ///
+  /// - Note:
+  /// Initialization fails if the `title` is an empty `String`.
+  public init!(_ title: String) {
+    // Precondition.
+    guard !title.isEmpty else { return nil }
+
+    self.title = title
+  }
+}
+
+extension Language : Equatable { }
+/// `Language`s are considered equal iff their `title`s are equal.
+public func ==(lhs: Language, rhs: Language) -> Bool {
+  return lhs.title == rhs.title
+}
+
+extension Language : Hashable {
+  public var hashValue: Int {
+    return title.hashValue
+  }
+}
+
+extension Language : Comparable { }
+/// `Language`s compare by their `title`.
+public func <(lhs: Language, rhs: Language) -> Bool {
+  return lhs.title < rhs.title
+}
+
+/// A word or phrase of a certain group in a certain language.
+public struct Expression {
+  public let text: String
+  public let group: Group
+  public let language: Language
+  public var context: String?
+
+  /// Returns a new `Expression` with a changed value for `group`.
+  ///
+  /// - Parameter group:
+  /// The `Expression.Group` which the new `Expression` should have.
+  public func changing(group newGroup: Group) -> Expression {
+    return Expression(text, in: language, group: newGroup, context: context)
+  }
+
+  /// Returns a new `Expression` with a changed value for `language`.
+  ///
+  /// - Parameter language:
+  /// The `Language` which the new `Expression` should have.
+  public func changing(language newLanguage: Language) -> Expression {
+    return Expression(text, in: newLanguage, group: group, context: context)
+  }
+
+  /// Directly initializes all of `self`'s properties from their corresponding
+  /// parameters.
+  ///
+  /// - Parameters:
+  ///   - text: The actual expression as a `String`.
+  ///   - language: The language in which the `text` is written.
+  ///   - group: The group of expressions `text` belongs to.
+  ///   - context: Optional context about the entire `Expression`.
+  ///
+  /// - Note:
+  /// Initialization fails if the `text` is an empty `String`.
+  public init!(
+    _ text: String,
+    in language: Language,
+    group: Group,
+    context: String? = nil
+  ) {
+    // Precondition.
+    guard !text.isEmpty else { return nil }
+
+    self.text     = text
+    self.group    = group
+    self.language = language
+    self.context  = context
+  }
+}
+
+extension Expression : Equatable { }
+/// `Expression`s are considered equal iff all of their stored properties are
+/// equal.
+public func ==(lhs: Expression, rhs: Expression) -> Bool {
+  return lhs.text     == rhs.text     &&
+         lhs.group    == rhs.group    &&
+         lhs.language == rhs.language &&
+         lhs.context  == rhs.context
+}
+
+extension Expression : Hashable {
+  public var hashValue: Int {
+    // Removing the space would lead to more hash collisions.
+    return "\(text) \(group) \(language) \(context)".hashValue
+  }
+}
+
+extension Expression : Comparable { }
+/// `Expression`s are compared on three levels:
+/// * If the `text`s differ, they will be compared.
+/// * If the `text`s do not differ, the `language`s will be compared.
+/// * If the `language`s do not differ either, the `group`s will be compared.
+public func <(lhs: Expression, rhs: Expression) -> Bool {
+  if lhs.text != rhs.text {
+    return lhs.text < rhs.text
+  } else if lhs.language != rhs.language {
+    return lhs.language < rhs.language
+  } else {
+    return lhs.group < rhs.group
+  }
+}
+
+extension Expression {
+  /// Represents the name of a group/type of expressions.
+  ///
+  /// - Note:
+  /// A `Group` is to be used as a pure value, hence it is intrinsically
+  /// immutable.
+  public struct Group {
     public let title: String
 
-    /// * Note: This initializer fails, if passed an empty `String`.
+    /// Initializes an instance directly from the given `title`.
+    ///
+    /// - Note:
+    /// Initialization fails if the `title` is an empty `String`.
+    ///
+    /// - Parameter title:
+    /// The name/title of the `Group`.
     public init!(_ title: String) {
-        guard !title.isEmpty else { return nil }
-        self.title = title
+      // Precondition.
+      guard !title.isEmpty else { return nil }
+
+      self.title = title
     }
+  }
 }
 
-extension Language: Hashable {
-    public var hashValue: Int {
-        return title.hashValue
-    }
+extension Expression.Group : Equatable { }
+/// `Expression.Group`s are considered equal iff their `title`s are equal.
+public func ==(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
+  return lhs.title == rhs.title
 }
 
-extension Language: Equatable { }
-/// `Language`s are considered equal, if their `title`s evaluate as equal.
-public func ==(lhs: Language, rhs: Language) -> Bool {
-    return lhs.title == rhs.title
+extension Expression.Group : Hashable {
+  public var hashValue: Int {
+    return title.hashValue
+  }
 }
 
-extension Language: Comparable { }
-/// `Language`s compare lexogrphically by their `title`.
-public func <(lhs: Language, rhs: Language) -> Bool {
-    return lhs.title < rhs.title
-}
-
-/// A word or phrase in a certain language.
-///
-/// * Note: An `Expression` can not be initialized with an empty `String`.
-public struct Expression {
-    public let value: String
-    public let language: Language
-
-    /// * Note: This initializer fails, if passed an empty `String`.
-    public init!(_ value: String, in language: Language) {
-        guard !value.isEmpty else { return nil }
-        self.value = value
-        self.language = language
-    }
-}
-
-extension Expression: Hashable {
-    public var hashValue: Int {
-        // Removing the space would lead to more hash collisions.
-        return "\(value) \(language)".hashValue
-    }
-}
-
-extension Expression: Equatable { }
-/// `Expression`s are considered equal, if both of their stored properties
-/// evaluate as equal.
-public func ==(lhs: Expression, rhs: Expression) -> Bool {
-    return lhs.value == rhs.value && lhs.language == rhs.language
-}
-
-extension Expression: Comparable { }
-/// `Expression`s are compared on two levels:
-/// - If the `Expression`s `value`s differ, they will be compared
-/// lexographically.
-/// - If the `Expression`s `value`s do not differ, the `languages` will be
-/// compared instead.
-public func <(lhs: Expression, rhs: Expression) -> Bool {
-    if lhs.value != rhs.value {
-        return lhs.value < rhs.value
-    } else {
-        return lhs.language < rhs.language
-    }
+extension Expression.Group : Comparable { }
+/// `Expression.Group`s compare by their `title`.
+public func <(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
+  return lhs.title < rhs.title
 }

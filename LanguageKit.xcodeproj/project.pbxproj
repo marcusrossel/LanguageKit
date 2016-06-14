@@ -11,10 +11,7 @@
 		DD182D4D1D0744F40051ACFA /* Lexicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD182D4C1D0744F40051ACFA /* Lexicon.swift */; };
 		DD8CFD171C9F6B7D005F0C30 /* LanguageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DDB3E2991D09D3FC0085ED57 /* Lexicon.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */; };
-		DDB3E29B1D09D4080085ED57 /* Lexicon.Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */; };
-		DDB3E29D1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */; };
-		DDB3E29F1D0C299A0085ED57 /* Synonyms.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */; };
-		DDB3E2A11D0C6CE40085ED57 /* Lexicon.Entry.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E2A01D0C6CE40085ED57 /* Lexicon.Entry.Group.swift */; };
+		DDB3E29F1D0C299A0085ED57 /* Synoset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3E29E1D0C299A0085ED57 /* Synoset.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +21,7 @@
 		DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguageKit.h; sourceTree = "<group>"; };
 		DD8CFD181C9F6B7D005F0C30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Entry.swift; sourceTree = "<group>"; };
-		DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Page.swift; sourceTree = "<group>"; };
-		DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.LinkedEntry.swift; sourceTree = "<group>"; };
-		DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synonyms.swift; sourceTree = "<group>"; };
-		DDB3E2A01D0C6CE40085ED57 /* Lexicon.Entry.Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexicon.Entry.Group.swift; sourceTree = "<group>"; };
+		DDB3E29E1D0C299A0085ED57 /* Synoset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synoset.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,11 +55,8 @@
 			isa = PBXGroup;
 			children = (
 				DD182D461D0713F50051ACFA /* Primitives.swift */,
-				DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */,
-				DDB3E2A01D0C6CE40085ED57 /* Lexicon.Entry.Group.swift */,
+				DDB3E29E1D0C299A0085ED57 /* Synoset.swift */,
 				DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */,
-				DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */,
-				DDB3E29C1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift */,
 				DD182D4C1D0744F40051ACFA /* Lexicon.swift */,
 				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
@@ -118,6 +109,7 @@
 					DD8CFD121C9F6B7D005F0C30 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 8YSJ38HAEZ;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -154,11 +146,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDB3E2991D09D3FC0085ED57 /* Lexicon.Entry.swift in Sources */,
-				DDB3E29F1D0C299A0085ED57 /* Synonyms.swift in Sources */,
-				DDB3E2A11D0C6CE40085ED57 /* Lexicon.Entry.Group.swift in Sources */,
+				DDB3E29F1D0C299A0085ED57 /* Synoset.swift in Sources */,
 				DD182D471D0713F50051ACFA /* Primitives.swift in Sources */,
-				DDB3E29B1D09D4080085ED57 /* Lexicon.Page.swift in Sources */,
-				DDB3E29D1D0B1A4B0085ED57 /* Lexicon.LinkedEntry.swift in Sources */,
 				DD182D4D1D0744F40051ACFA /* Lexicon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +263,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -295,6 +285,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
