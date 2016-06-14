@@ -6,9 +6,7 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-extension Lexicon.Entry {
-    public typealias Link = (Language, Synonyms)
-}
+
 
 /*
 extension Lexicon {

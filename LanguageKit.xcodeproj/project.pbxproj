@@ -58,16 +58,24 @@
 		DD8CFD151C9F6B7D005F0C30 /* LanguageKit */ = {
 			isa = PBXGroup;
 			children = (
+				DDB3E2A21D0DB3CC0085ED57 /* Removeable? */,
 				DD182D461D0713F50051ACFA /* Primitives.swift */,
 				DDB3E29E1D0C299A0085ED57 /* Synonyms.swift */,
 				DDB3E2981D09D3FC0085ED57 /* Lexicon.Entry.swift */,
-				DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */,
 				DD182D4C1D0744F40051ACFA /* Lexicon.swift */,
-				DDB3E29C1D0B1A4B0085ED57 /* Lexicon.MultiEntry.swift */,
 				DD8CFD161C9F6B7D005F0C30 /* LanguageKit.h */,
 				DD8CFD181C9F6B7D005F0C30 /* Info.plist */,
 			);
 			path = LanguageKit;
+			sourceTree = "<group>";
+		};
+		DDB3E2A21D0DB3CC0085ED57 /* Removeable? */ = {
+			isa = PBXGroup;
+			children = (
+				DDB3E29C1D0B1A4B0085ED57 /* Lexicon.MultiEntry.swift */,
+				DDB3E29A1D09D4080085ED57 /* Lexicon.Page.swift */,
+			);
+			name = "Removeable?";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -115,6 +123,7 @@
 					DD8CFD121C9F6B7D005F0C30 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 8YSJ38HAEZ;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -270,6 +279,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -291,6 +301,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

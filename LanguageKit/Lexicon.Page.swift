@@ -57,9 +57,9 @@ extension Lexicon {
         public mutating func insert(entry newEntry: Entry) -> Bool {
             guard canInsert(newEntry) else { return false }
 
-            for (index, entry) in entries.enumerate() {
+            for (index, entry) in entries.enumerated() {
                 if newEntry < entry {
-                    entries.insert(newEntry, atIndex: index)
+                    entries.insert(newEntry, at: index)
                     return true
                 }
             }
@@ -78,11 +78,11 @@ extension Lexicon {
         /// protocol, whose elements are `Entry`s.
         /// * Returns: The number of `Entry`s that were succesfully inserted.
         public mutating func insert
-            <S: SequenceType where S.Generator.Element == Entry>
+            <S: Sequence where S.Iterator.Element == Entry>
             (entries newEntries: S) -> Int
         {
             let insertables = newEntries.filter(canInsert)
-            entries = (entries + insertables).sort()
+            entries = (entries + insertables).sorted()
             return insertables.count
         }
 
@@ -92,7 +92,7 @@ extension Lexicon {
 
         /// Initializes the `Page` using every `Entry` in `entries`, that is of
         /// the given `languages`, and in the given set of `groups`.
-        public init <S: SequenceType where S.Generator.Element == Entry>(
+        public init <S: Sequence where S.Iterator.Element == Entry>(
             groups: Set<Expression.Group> = [],
             languages: (expressions: Language, translations: Language),
             entries: S

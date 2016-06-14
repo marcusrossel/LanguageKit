@@ -38,6 +38,16 @@ extension Lexicon {
             return expression.context
         }
 
+        internal var flipped: [Entry] {
+            let oldExpression = Synonyms(expressions: [expression],
+                                         language: expression.language)
+
+            return translations.map { translation in
+                return Entry(expression: translation,
+                             translations: oldExpression)
+            }
+        }
+
         /// Inserts the given `Expression` into the `Entry`'s `translations`.
         ///
         /// * Note: Insertion will only be successful if the `Expression`'s
@@ -74,8 +84,8 @@ extension Lexicon {
 ///
 /// * Note: Only `Expression`s whose `language` equals the `Entry`'s
 /// `translations`' `language`, will be insertable.
-public func +=<S: SequenceType where S.Generator.Element == Expression>(
-    inout entry: Lexicon.Entry,
+public func +=<S: Sequence where S.Iterator.Element == Expression>(
+    entry: inout Lexicon.Entry,
     translations: S
 ) {
     // Checks if the given sequence is of type `Synonyms` to allow for more
@@ -90,8 +100,8 @@ public func +=<S: SequenceType where S.Generator.Element == Expression>(
 }
 
 /// Removes the given `Expression`s from the `Entry`s `translations`.
-public func -=<S: SequenceType where S.Generator.Element == Expression>(
-    inout entry: Lexicon.Entry,
+public func -=<S: Sequence where S.Iterator.Element == Expression>(
+    entry: inout Lexicon.Entry,
     translations: S
 ) {
     entry.translations -= translations
