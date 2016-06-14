@@ -26,98 +26,92 @@ extension Lexicon {
   /// rather implicitly in its `expression` and `translations`. This method is
   /// viable, as these properties can never change their `Language` once set.
   public struct Entry {
-    public let expression: Expression
-    public private(set) var translations: Synonyms
+    public let head: Expression
+    public private(set) var translations: Synoset
 
-    internal var flipped: [Entry] {
-      let oldExpression = Synonyms(expressions: [expression],
-                                   language: expression.language)
+    /// Returns a set of *flipped* `Entry`s.
+    ///
+    /// An `Entry` is *flipped*, by changing its `head` and `translations`. As
+    /// there can be multiple `translations`, a flip can produce multiple
+    /// `Entry`s.
+    ///
+    /// - Note:
+    /// An empty set is returned if `translations` is empty.
+    ///
+    /// This method is optimized for the case that `translations` is empty.
+    public func flipped() -> Set<Entry> {
+      // Optimizations.
+      guard !translations.isEmpty else { return [] }
 
-            return translations.map { translation in
-                return Entry(expression: translation,
-                             translations: oldExpression)
-            }
-        }
+      let headSynoset = Synoset(expression: head)
+      let flippedEntries = translations.map { (translation) -> Entry in
+        return Entry(head: translation, translations: headSynoset)
+      }
 
-        /// Inserts the given `Expression` into the `Entry`'s `translations`.
-        ///
-        /// * Note: Insertion will only be successful if the `Expression`'s
-        /// `language` equals the `translations`' `language`.
-        ///
-        /// * Returns: A `Bool` indicating if insertion was successful.
-        public mutating func insert(translation: Expression) -> Bool {
-            return translations.insert(translation)
-        }
-
-        /// Removes the given `Expression` from the `Entry`'s `translations`.
-        public mutating func remove(translation: Expression) {
-            translations.remove(translation)
-        }
-
-        public init(expression: Expression, translations: Synonyms,
-                    context: String = "") {
-            self.expression = expression
-            self.translations = translations
-        }
-
-        public init(expression: Expression, translationLanguage: Language,
-                    context: String = "") {
-            self.init(
-                expression: expression,
-                translations: Synonyms(language: translationLanguage),
-                context: context
-            )
-        }
+      return Set(flippedEntries)
     }
+
+    /// Inserts the given `expression` into the `translations` `Synoset`.
+    ///
+    /// - Returns:
+    /// A `Bool` indicating if insertion was successful.
+    ///
+    /// - Note:
+    /// Insertion will only be successful if the `expression`'s language equals
+    /// the `translations`' language.
+    public mutating func insert(expression: Expression) -> Bool {
+      return translations.insert(expression)
+    }
+
+    /// Removes the given `translation` from `translations`.
+    public mutating func remove(translation: Expression) {
+      translations.remove(translation)
+    }
+
+    public init(head: Expression, translations: Synoset) {
+      self.head = head
+      self.translations = translations
+    }
+  }
 }
 
-/// Tries to insert the given `Expression`s into the `Entry`s `translations`.
+/// Tries to insert the given `Expression`s into `entry`s `translations`.
 ///
-/// * Note: Only `Expression`s whose `language` equals the `Entry`'s
-/// `translations`' `language`, will be insertable.
+/// - Note:
+/// Only `Expression`s whose language equals the `entry`'s `translations`'
+/// language will be insertable.
+///
+/// This function is optimized for the case that either parameter's sequence is
+/// empty, that the languages do not match, and that `expression` is of type
+/// `Synoset`.
 public func +=<S: Sequence where S.Iterator.Element == Expression>(
     entry: inout Lexicon.Entry,
-    translations: S
+    expressions: S
 ) {
-    // Checks if the given sequence is of type `Synonyms` to allow for more
-    // efficient insertion.
-    if entry.translations.isEmpty,
-       let synonyms = translations as? Synonyms
-       where synonyms.language == entry.translations.language {
-        entry.translations = synonyms
-    } else {
-        entry.translations += translations
-    }
+  // Optimization is performed by the `+=` operator.
+  entry.translations += expressions
 }
 
-/// Removes the given `Expression`s from the `Entry`s `translations`.
-public func -=<S: Sequence where S.Iterator.Element == Expression>(
-    entry: inout Lexicon.Entry,
-    translations: S
-) {
-    entry.translations -= translations
-}
-
-extension Lexicon.Entry: Equatable { }
-/// `Lexicon.Entry`s are considered equal, if all of their stored properties
-/// evaluate as equal.
+extension Lexicon.Entry : Equatable { }
+/// `Lexicon.Entry`s are considered equal iff all of their stored properties
+/// are equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    return lhs.expression   == rhs.expression &&
-           lhs.translations == rhs.translations
+  return lhs.head         == rhs.head &&
+         lhs.translations == rhs.translations
 }
 
-extension Lexicon.Entry: Hashable {
-    public var hashValue: Int {
-        let strings = [expression.value] + translations.map { expression in
-            expression.value
-        }
-
-        return String(strings).hashValue
+extension Lexicon.Entry : Hashable {
+  public var hashValue: Int {
+    let strings = [head.text] + translations.map { expression -> String in
+      return head.text
     }
+
+    return "\(strings)".hashValue
+  }
 }
 
-extension Lexicon.Entry: Comparable { }
-/// `Lexicon.Entry`s are compared by their `expression` property.
+extension Lexicon.Entry : Comparable { }
+/// `Lexicon.Entry`s are compared by their `head` property.
 public func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-    return lhs.expression < rhs.expression
+  return lhs.head < rhs.head
 }
