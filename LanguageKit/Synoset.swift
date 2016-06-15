@@ -118,7 +118,7 @@ public struct Synoset {
   /// The `Synosets` must have the same `language`.
   ///
   /// - Note:
-  /// This method is optimized for the case that `synoset` is empty.
+  /// This method is optimized for the case that `synoset` or `self` is empty.
   @discardableResult
   public mutating func merge(with synoset: Synoset) -> Bool {
     // Precondition.
@@ -236,13 +236,13 @@ public func +=<S: Sequence where S.Iterator.Element == Expression>(
     synoset: inout Synoset,
     expressions: S
 ) {
-  // Optimizations.
-  guard !Array(expressions).isEmpty else { return }
-
-  // Checks if the given sequence is of type `Synoset` to allow for more
+    // Checks if the given sequence is of type `Synoset` to allow for more
   // efficient insertion.
   if let derivedSynoset = expressions as? Synoset
   where derivedSynoset.language == synoset.language {
+    // Optimizations.
+    guard !derivedSynoset.synonyms.isEmpty else { return }
+
     // Checks if the `synoset`'s `synonyms` are empty to allow for more
     // efficient insertion.
     if synoset.synonyms.isEmpty {
@@ -251,6 +251,9 @@ public func +=<S: Sequence where S.Iterator.Element == Expression>(
       synoset.merge(with: derivedSynoset)
     }
   } else {
+    // Optimizations.
+    guard !Array(expressions).isEmpty else { return }
+
     let languageCompliants = expressions.filter { (expression) -> Bool in
       return expression.language == synoset.language
     }
