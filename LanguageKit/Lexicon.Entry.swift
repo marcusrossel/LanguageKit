@@ -26,12 +26,12 @@ extension Lexicon {
   /// rather implicitly in its `expression` and `translations`. This method is
   /// viable, as these properties can never change their `Language` once set.
   public struct Entry {
-    public let head: Expression
+    public let title: Expression
     public private(set) var translations: Synoset
 
     /// Returns a set of *flipped* `Entry`s.
     ///
-    /// An `Entry` is *flipped*, by changing its `head` and `translations`. As
+    /// An `Entry` is *flipped*, by changing its `title` and `translations`. As
     /// there can be multiple `translations`, a flip can produce multiple
     /// `Entry`s.
     ///
@@ -43,9 +43,9 @@ extension Lexicon {
       // Optimizations.
       guard !translations.isEmpty else { return [] }
 
-      let headSynoset = Synoset(expression: head)
+      let titleSynoset = Synoset(expression: title)
       let flippedEntries = translations.map { (translation) -> Entry in
-        return Entry(head: translation, translations: headSynoset)
+        return Entry(title: translation, translations: titleSynoset)
       }
 
       return Set(flippedEntries)
@@ -68,8 +68,8 @@ extension Lexicon {
       translations.remove(translation)
     }
 
-    public init(head: Expression, translations: Synoset) {
-      self.head = head
+    public init(title: Expression, translations: Synoset) {
+      self.title = title
       self.translations = translations
     }
   }
@@ -96,14 +96,14 @@ extension Lexicon.Entry : Equatable { }
 /// `Lexicon.Entry`s are considered equal iff all of their stored properties
 /// are equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-  return lhs.head         == rhs.head &&
+  return lhs.title         == rhs.title &&
          lhs.translations == rhs.translations
 }
 
 extension Lexicon.Entry : Hashable {
   public var hashValue: Int {
-    let strings = [head.text] + translations.map { expression -> String in
-      return head.text
+    let strings = [title.text] + translations.map { expression -> String in
+      return title.text
     }
 
     return "\(strings)".hashValue
@@ -111,7 +111,7 @@ extension Lexicon.Entry : Hashable {
 }
 
 extension Lexicon.Entry : Comparable { }
-/// `Lexicon.Entry`s are compared by their `head` property.
+/// `Lexicon.Entry`s are compared by their `title` property.
 public func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-  return lhs.head < rhs.head
+  return lhs.title < rhs.title
 }
