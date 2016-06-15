@@ -236,36 +236,28 @@ public func +=<S: Sequence where S.Iterator.Element == Expression>(
     synoset: inout Synoset,
     expressions: S
 ) {
-    // Checks if the given sequence is of type `Synoset` to allow for more
-  // efficient insertion.
-  if let derivedSynoset = expressions as? Synoset
-  where derivedSynoset.language == synoset.language {
-    // Optimizations.
-    guard !derivedSynoset.synonyms.isEmpty else { return }
-
-    // Checks if the `synoset`'s `synonyms` are empty to allow for more
-    // efficient insertion.
-    if synoset.synonyms.isEmpty {
-      synoset.synonyms = derivedSynoset.synonyms
-    } else {
-      synoset.merge(with: derivedSynoset)
-    }
-  } else {
-    // Optimizations.
-    guard !Array(expressions).isEmpty else { return }
-
+  // Differentiates between several cases of certain arrays being empty, or
+  // the passed sequence being of type `Synoset`, etc. for efficiency.
+  switch (expressions as? Synoset, synoset.synonyms.isEmpty) {
+  case (let derived?, true)
+    where !derived.synonyms.isEmpty && derived.language == synoset.language:
+    synoset.synonyms = derived.synonyms
+  case (let derived?, false)
+    where !derived.synonyms.isEmpty && derived.language == synoset.language:
+    synoset.merge(with: derived)
+  case (nil, let synosetIsEmpty) where !Array(expressions).isEmpty:
     let languageCompliants = expressions.filter { (expression) -> Bool in
       return expression.language == synoset.language
     }
     let insertables = Set(languageCompliants)
 
-    // Checks if the `synoset`'s `synonyms` are empty to allow for more
-    // efficient insertion.
-    if synoset.synonyms.isEmpty {
+    if synosetIsEmpty {
       synoset.synonyms = insertables.sorted()
     } else {
       synoset.synonyms = (synoset.synonyms + insertables).sorted()
     }
+  default:
+    return
   }
 }
 
