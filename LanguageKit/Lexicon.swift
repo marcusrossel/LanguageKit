@@ -7,120 +7,105 @@
 //
 
 public struct Lexicon {
-    private var storage = Set<Entry>()
+  private var storage = Set<Entry>()
 
-    public func entries(from origin: Language, to destination: Language) -> [Entry] {
-        // Gets all `Entry`s that can be returned as is.
-        let finishedOnes1 = storage
-            .filter { entry in entry.languages == (origin, destination) }
+  public init(entries: [Entry]) {
+    storage = Set(entries)
+  }
 
-        // Gets all `Entry`s that contain the desired `Languages`, but flipped.
-        // It then creates new `Entry`s by making the `translations`
-        // `expression`s and vice versa.
-        let finishedOnes2 = storage
-            .filter  { entry in entry.languages == (destination, origin) }
-            .map     { entry in entry.flipped }
-            .flatMap { entry in entry }
+  public func entries(origin: Language, destination: Language) -> [String: Any] {
+    let desiredLanguages = (origin, destination)
 
-        // Combines the `Entry`s that are returnable, and removes possible
-        // duplicates, by storing them as a `Set`.
-        let finishedOnes = Set(finishedOnes1 + finishedOnes2)
+    // Gets all `Entry`s that can be returned as is.
+    let completeEntries1 = storage.filter { $0.languages == desiredLanguages }
 
-        // Gets all the `Entry`s, whose `expression`s are in the `Language` of
-        // `origin`.
-        let unfinishedOnes1 = storage.filter { entry in
-            entry.expression.language == origin &&
-            entry.translations.language != destination
-        }
+    // Gets all `Entry`s that contain the desired `Languages`, but flipped,
+    // and flipps them.
+    let completeEntries2 = storage
+      .filter { $0.languages == (destination, origin) }
+      .map { $0.flipped() }
+      .flatMap { $0 }
 
-        // Gets all `Entry`s whose `translations` are in the `Language` of
-        // `origin`.
-        // It then creates new `Entry`s by making the `translations`
-        // `expression`s and vice versa.
-        let unfinishedOnes2 = storage
-            .filter { entry in
-                entry.expression.language != destination &&
-                entry.translations.language == origin }
-            .map     { entry in entry.flipped }
-            .flatMap { entry in entry }
+    // Combines the `Entry`s that are returnable, and removes possible
+    // duplicates, by storing them as a `Set`.
+    let completeEntries = completeEntries1 + completeEntries2
 
-        // Combines the `Entry`s whose `expression` is in the `Language` of
-        // `origin`, and removes possible duplicates, by storing them as a
-        // `Set`.
-        let unfinishedOnes = Set(unfinishedOnes1 + unfinishedOnes2)
-
-        let unfinishedAndAssociates = storage.map { entry -> (Entry, [Entry]) in
-            let associatedValues: [Entry] = storage.filter { ent in
-                ent.expression == entry.expression ||
-                ent.translations.contains(entry.expression)
-            }
-
-            return (entry, associatedValues)
-        }
-
+    // Gets all the `Entry`s, whose `expression`s are in the `Language` of
+    // `origin`.
+    let incompleteEntries1 = storage.filter { entry in
+      entry.title.language == origin &&
+        entry.translations.language != destination
     }
+
+    // Gets all `Entry`s whose `translations` are in the `Language` of
+    // `origin` and flipps them.
+    let incompleteEntries2 = storage
+      .filter { entry in
+        entry.title.language != destination &&
+          entry.translations.language == origin
+      }
+      .map { $0.flipped() }
+      .flatMap { $0 }
+
+    // Combines the `Entry`s whose `expression` is in the `Language` of
+    // `origin`, and removes possible duplicates.
+    let incompleteEntries = Array(Set(incompleteEntries1 + incompleteEntries2))
+
+    // Split every Entry in incompleteEntries up into Expression pairs,
+    // turning them back into Entrys after transformation, while unifying the
+    // pairs with the same `title` Expression.
+    let expressionsPairs = incompleteEntries.map {
+      entry -> [(Expression, Expression)] in
+      entry.translations.map { (entry.title, $0) }
+      }.flatMap { $0 }
+
+
+    // allow more than one layer depth, but then watch out that no link-cycles spawn
+    let enhancedPairs = expressionsPairs.map { (title, translation) -> [(Expression, Expression)] in
+      let associatedEntries: [Entry] = storage.filter { entry in
+        entry.title.language != origin &&
+          entry.translations.language != origin &&
+          entry.containsAnyOf([translation])
+      }
+
+      let associatedExpressions = associatedEntries.map { associate -> [Expression] in
+        if associate.title == translation {
+          return Array(associate.translations)
+        } else /*associate.translations.contains(translation)*/ {
+          return [associate.title]
+        }
+        }.flatMap { $0 }
+
+      return associatedExpressions.map { (title, $0) }
+      }.flatMap { $0 }
+
+    // translations that could not be enhanced further, but never endet up being of the desired language are removed
+    let validPairs = enhancedPairs.filter { (_, translation) in
+      translation.language == destination
+    }
+
+    var expressionStructurePairs = [(Expression, Synoset)]()
+
+    for pair in validPairs {
+      if let index = (expressionStructurePairs.index { (title, _) in title == pair.0 }) {
+        expressionStructurePairs[index].1.insert(pair.1)
+      } else {
+        expressionStructurePairs.append((pair.0, Synoset(expression: pair.1)))
+      }
+    }
+
+    let enhancedEntries = expressionStructurePairs.map { (expression, synoset) -> Entry in
+      Entry(title: expression, translations: synoset)
+    }
+
+    let finalResult = completeEntries + enhancedEntries
+
+    return ["completeEntries": completeEntries,
+            "incompleteEntries": incompleteEntries,
+            "expressionPairs": expressionsPairs,
+            "enhancedPairs": enhancedPairs,
+            "expressionStructurePairs": expressionStructurePairs,
+            "enhancedEntries": enhancedEntries,
+            "finalResult": finalResult]
+  }
 }
-
-// Method: (from: origin, to: destination)
-//
-// (1) filter storage for entries where languages.expression is origin
-// (2) filter storage for entries where langauges.translation is origin
-// (2.1) refactor those entires into multiple entries with flipped languages
-// (2.2) for entires from 2.1 whose translations are not in the destination language, check if there exist entries (who also do not contain the origin language) with those expressions (the translations of incorrect language)
-// (2.2.1) if any entries were found substitute the 2.1 entries' translations for the 2.2 entries' expressions of other language (if there's multiple 2.2 entries, merge the synonyms. if they're of other languages, make copies of the 2.1 entries)
-// (2.2.1.1) goto (2.2) (process should stop when the destin. language is reached, if not build in stopping mechanism)
-// (2.3) filter the 2.1 entries for the right languages
-// (2.4) combine and return all entries
-
-
-// E(hello - na, wie gehts)
-// E(moin - hello, how ya doin, hey)
-// E(tre - tree)
-// E(baum - tre)
-//
-// (1)
-// E(hello - na, wie gehts)
-//
-// (2)
-// E(moin - hello, how ya doin, hey)
-// E(tre - tree)
-//
-// (2.1)
-// E(hello - moin)
-// E(how ya doin - moin)
-// E(hey - moin)
-// E(tree - tre)
-//
-// (2.2)
-// E(baum - tre)
-//
-// (2.2.1)
-// E(tree - baum)
-//
-// (2.2.1.1)
-// 
-// (2.3)
-//
-// (2.4)
-
-//
-// English German
-// German English -> English German
-//
-// Finished Ones
-//
-
-//
-// English Some
-// Some English -> English Some
-//
-// Unfinished Ones
-//
-
-// find those which have language Some and expression
-
-
-
-
-
-

@@ -42,15 +42,13 @@ public struct Synoset {
     }
     guard !synonyms.contains(expression) else { return true }
 
-    // Tries to find the correct `index` for `synonym` in `expressions`.
-    let possibleIndex = synonyms.index { (synonym) -> Bool in
-      return expression < synonym
-    }
+    // Tries to find the correct `index` for `expression` in `synonyms`.
+    let possibleIndex = synonyms.index { synonym in synonym > expression }
 
     if let index = possibleIndex {
       synonyms.insert(expression, at: index)
     } else {
-      // If `synonym` is greater than all other `Expression`s, it must be
+      // If `expression` is greater than all other `Expression`s, it must be
       // appended.
       synonyms.append(expression)
     }
@@ -79,7 +77,7 @@ public struct Synoset {
     _ lhs: [Expression],
     _ rhs: [Expression],
     optimized: Bool = true
-  ) -> [Expression]
+    ) -> [Expression]
   {
     // Shortcuts on empty arrays if `optimized` is `true`.
     if optimized && (lhs.isEmpty || rhs.isEmpty) {
@@ -204,11 +202,9 @@ public struct Synoset {
   public init<S: Sequence where S.Iterator.Element == Expression>(
     expressions: S,
     language: Language
-  ) {
+    ) {
     self.init(language: language)
-    synonyms = expressions.sorted().filter { (expression) -> Bool in
-      return expression.language == language
-    }
+    synonyms = expressions.filter { $0.language == language }.sorted()
   }
 
   /// Initializes `self` based on the `Language` of the first `Expression` in
@@ -217,9 +213,9 @@ public struct Synoset {
   /// - Note:
   /// Based on the assumption that all `Expression`s are of the same language,
   /// this removes the need to explicitly supply the language.
-  public init?<S: Sequence where S.Iterator.Element == Expression>(
+  public init!<S: Sequence where S.Iterator.Element == Expression>(
     expressions: S
-  ) {
+    ) {
     guard let firstExpression = Array(expressions).first else { return nil }
     self.init(expressions: expressions, language: firstExpression.language)
   }
@@ -233,9 +229,9 @@ public struct Synoset {
 /// empty, that the languages do not match, and that `expression` is of type
 /// `Synoset`.
 public func +=<S: Sequence where S.Iterator.Element == Expression>(
-    synoset: inout Synoset,
-    expressions: S
-) {
+  synoset: inout Synoset,
+  expressions: S
+  ) {
   // Differentiates between several cases of certain arrays being empty, or
   // the passed sequence being of type `Synoset`, etc. for efficiency.
   switch (expressions as? Synoset, synoset.synonyms.isEmpty) {
@@ -246,8 +242,8 @@ public func +=<S: Sequence where S.Iterator.Element == Expression>(
     where !derived.synonyms.isEmpty && derived.language == synoset.language:
     synoset.merge(with: derived)
   case (nil, let synosetIsEmpty) where !Array(expressions).isEmpty:
-    let languageCompliants = expressions.filter { (expression) -> Bool in
-      return expression.language == synoset.language
+    let languageCompliants = expressions.filter {
+      $0.language == synoset.language
     }
     let insertables = Set(languageCompliants)
 
@@ -299,3 +295,11 @@ extension Synoset : Collection {
     return synonyms[bounds]
   }
 }
+
+/*LEXICON-TEST-CODE-BEGIN*/
+extension Synoset : CustomStringConvertible {
+  public var description: String {
+    return "\(synonyms)"
+  }
+}
+/*LEXICON-TEST-CODE-END*/

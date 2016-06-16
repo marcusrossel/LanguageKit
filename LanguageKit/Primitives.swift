@@ -50,6 +50,14 @@ public func <(lhs: Language, rhs: Language) -> Bool {
   return lhs.title < rhs.title
 }
 
+/*LEXICON-TEST-CODE-BEGIN*/
+extension Language : CustomStringConvertible {
+  public var description: String {
+    return title
+  }
+}
+/*LEXICON-TEST-CODE-END*/
+
 /// A word or phrase of a certain group in a certain language.
 public struct Expression {
   public let text: String
@@ -89,7 +97,7 @@ public struct Expression {
     in language: Language,
     group: Group,
     context: String? = nil
-  ) {
+    ) {
     // Precondition.
     guard !text.isEmpty else { return nil }
 
@@ -105,9 +113,9 @@ extension Expression : Equatable { }
 /// equal.
 public func ==(lhs: Expression, rhs: Expression) -> Bool {
   return lhs.text     == rhs.text     &&
-         lhs.group    == rhs.group    &&
-         lhs.language == rhs.language &&
-         lhs.context  == rhs.context
+    lhs.group    == rhs.group    &&
+    lhs.language == rhs.language &&
+    lhs.context  == rhs.context
 }
 
 extension Expression : Hashable {
@@ -131,6 +139,14 @@ public func <(lhs: Expression, rhs: Expression) -> Bool {
     return lhs.group < rhs.group
   }
 }
+
+/*LEXICON-TEST-CODE-BEGIN*/
+extension Expression : CustomStringConvertible {
+  public var description: String {
+    return "<\(language) \(group) \"\(text)\">"
+  }
+}
+/*LEXICON-TEST-CODE-END*/
 
 extension Expression {
   /// Represents the name of a group/type of expressions.
@@ -174,3 +190,11 @@ extension Expression.Group : Comparable { }
 public func <(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
   return lhs.title < rhs.title
 }
+
+/*LEXICON-TEST-CODE-BEGIN*/
+extension Expression.Group : CustomStringConvertible {
+  public var description: String {
+    return title
+  }
+}
+/*LEXICON-TEST-CODE-END*/

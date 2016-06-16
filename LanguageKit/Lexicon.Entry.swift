@@ -7,7 +7,7 @@
 //
 
 extension Lexicon {
-  /// Represents the thing you would find when looking up an expression in a 
+  /// Represents the thing you would find when looking up an expression in a
   /// dictionary.
   ///
   /// It consists of:
@@ -29,6 +29,24 @@ extension Lexicon {
     public let title: Expression
     public private(set) var translations: Synoset
 
+    /*LEXICON-TEST-CODE-BEGIN*/
+    internal var languages: (Language, Language) {
+      return (title.language, translations.language)
+    }
+
+
+    internal func containsAnyOf<
+      S: Sequence where S.Iterator.Element == Expression
+      >(_ expressions: S) -> Bool {
+      for expression in expressions {
+        if title == expression || translations.contains(expression) {
+          return true
+        }
+      }
+      return false
+    }
+    /*LEXICON-TEST-CODE-END*/
+
     /// Returns a set of *flipped* `Entry`s.
     ///
     /// An `Entry` is *flipped*, by changing its `title` and `translations`. As
@@ -44,8 +62,8 @@ extension Lexicon {
       guard !translations.isEmpty else { return [] }
 
       let titleSynoset = Synoset(expression: title)
-      let flippedEntries = translations.map { (translation) -> Entry in
-        return Entry(title: translation, translations: titleSynoset)
+      let flippedEntries = translations.map {
+        Entry(title: $0, translations: titleSynoset)
       }
 
       return Set(flippedEntries)
@@ -85,9 +103,9 @@ extension Lexicon {
 /// empty, that the languages do not match, and that `expression` is of type
 /// `Synoset`.
 public func +=<S: Sequence where S.Iterator.Element == Expression>(
-    entry: inout Lexicon.Entry,
-    expressions: S
-) {
+  entry: inout Lexicon.Entry,
+  expressions: S
+  ) {
   // Optimization is performed by the `+=` operator.
   entry.translations += expressions
 }
@@ -96,8 +114,8 @@ extension Lexicon.Entry : Equatable { }
 /// `Lexicon.Entry`s are considered equal iff all of their stored properties
 /// are equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-  return lhs.title         == rhs.title &&
-         lhs.translations == rhs.translations
+  return lhs.title        == rhs.title &&
+    lhs.translations == rhs.translations
 }
 
 extension Lexicon.Entry : Hashable {
@@ -115,3 +133,11 @@ extension Lexicon.Entry : Comparable { }
 public func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
   return lhs.title < rhs.title
 }
+
+/*LEXICON-TEST-CODE-BEGIN*/
+extension Lexicon.Entry : CustomStringConvertible {
+  public var description: String {
+    return "Entry(\(title): \(translations))"
+  }
+}
+/*LEXICON-TEST-CODE-END*/
