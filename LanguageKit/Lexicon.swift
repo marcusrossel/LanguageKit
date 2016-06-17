@@ -13,99 +13,128 @@ public struct Lexicon {
     storage = Set(entries)
   }
 
-  public func entries(origin: Language, destination: Language) -> [String: Any] {
-    let desiredLanguages = (origin, destination)
+  /// Acts like `filter` on `set`, but returns the included elements and removes
+  /// them from `set`.
+  private func carvingOff(of set: inout Set<Entry>, condition: (Entry) -> Bool) -> Set<Entry> {
+    let returnValue = Set(set.filter(condition))
+    set.subtract(returnValue)
+    return returnValue
+  }
+
+  public func entries(origin: Language, destination: Language) -> [Entry] {
+    var remainingEntries = storage
 
     // Gets all `Entry`s that can be returned as is.
-    let completeEntries1 = storage.filter { $0.languages == desiredLanguages }
+    let completeEntries1 = carvingOff(of: &remainingEntries) {
+      $0.languages == (origin, destination)
+    }
 
-    // Gets all `Entry`s that contain the desired `Languages`, but flipped,
-    // and flipps them.
-    let completeEntries2 = storage
-      .filter { $0.languages == (destination, origin) }
+    // Gets all `Entry`s that contain the desired languages but flipped, and
+    // flipps them.
+    let completeEntries2 = carvingOff(of: &remainingEntries) {
+      $0.languages == (destination, origin)
+      }
       .map { $0.flipped() }
       .flatMap { $0 }
 
-    // Combines the `Entry`s that are returnable, and removes possible
-    // duplicates, by storing them as a `Set`.
+    // Combines the `Entry`s that are returnable as is.
     let completeEntries = completeEntries1 + completeEntries2
 
-    // Gets all the `Entry`s, whose `expression`s are in the `Language` of
-    // `origin`.
-    let incompleteEntries1 = storage.filter { entry in
-      entry.title.language == origin &&
-        entry.translations.language != destination
+    // Gets all the `Entry`s, whose `title`s are in the language of `origin`
+    // (the `translations`' language can't be `destination`, as those `Entry`s
+    // have been carved off before).
+    let incompleteEntries1 = carvingOff(of: &remainingEntries) {
+      $0.title.language == origin
     }
 
-    // Gets all `Entry`s whose `translations` are in the `Language` of
-    // `origin` and flipps them.
-    let incompleteEntries2 = storage
-      .filter { entry in
-        entry.title.language != destination &&
-          entry.translations.language == origin
+    // Gets all the `Entry`s, whose `translations` are in the language of
+    // `origin` (the `title`'s language can't be `destination`, as those
+    // `Entry`s have been carved off before).
+    let incompleteEntries2 = carvingOff(of: &remainingEntries) {
+      $0.translations.language == origin
       }
       .map { $0.flipped() }
       .flatMap { $0 }
 
-    // Combines the `Entry`s whose `expression` is in the `Language` of
-    // `origin`, and removes possible duplicates.
-    let incompleteEntries = Array(Set(incompleteEntries1 + incompleteEntries2))
+    // Combines the `Entry`s that are not completely processed yet.
+    let incompleteEntries = incompleteEntries1 + incompleteEntries2
 
-    // Split every Entry in incompleteEntries up into Expression pairs,
-    // turning them back into Entrys after transformation, while unifying the
-    // pairs with the same `title` Expression.
-    let expressionsPairs = incompleteEntries.map {
-      entry -> [(Expression, Expression)] in
-      entry.translations.map { (entry.title, $0) }
-      }.flatMap { $0 }
+    // A `ProcessingPair` is a pair of `Expression`s with some meta-data.
+    typealias ProcessingPair = (title: Expression,
+      translation: Expression,
+      isFullyProcessed: Bool,
+      usedEntries: Set<Entry>)
 
+    // Split every `Entry` in `incompleteEntries` into pairs of `Expression`s.
+    // Therefore one `Entry` produces as many pairs as it has `translations`.
+    // The additional fields in the tuple will be used in following code.
+    var processingPairs: [ProcessingPair] = incompleteEntries
+      .map { entry in entry.translations.map { (entry.title, $0, false, []) } }
+      .flatMap { $0 }
 
-    // allow more than one layer depth, but then watch out that no link-cycles spawn
-    let enhancedPairs = expressionsPairs.map { (title, translation) -> [(Expression, Expression)] in
-      let associatedEntries: [Entry] = storage.filter { entry in
-        entry.title.language != origin &&
-          entry.translations.language != origin &&
-          entry.containsAnyOf([translation])
-      }
+    // Processes each pair in `processingPairs` until each one
+    // `isFullyProcessed`, while removing those, which will never be fully
+    // processed.
+    while processingPairs.contains({ !$0.isFullyProcessed }) {
+      processingPairs = processingPairs.map { pair -> [ProcessingPair] in
+        // Returns every `pair` that `isFullyProcessed` as is.
+        guard !pair.isFullyProcessed else { return [pair] }
 
-      let associatedExpressions = associatedEntries.map { associate -> [Expression] in
-        if associate.title == translation {
-          return Array(associate.translations)
-        } else /*associate.translations.contains(translation)*/ {
-          return [associate.title]
+        // Gets all `remainingEntries` that contain the `pair`'s `translation`
+        // and have not been associated/used with this `pair` before.
+        let associatedEntries = remainingEntries.filter {
+          !pair.usedEntries.contains($0) && $0.contains(pair.translation)
         }
-        }.flatMap { $0 }
 
-      return associatedExpressions.map { (title, $0) }
-      }.flatMap { $0 }
+        // Removes `pair`s that will never be fully processed (branches by which
+        // the `destination` language never will be reached).
+        //
+        // Alternative: [(pair.title, pair.translation, true, pair.usedEntries)]
+        // ... with later filtering of those pairs (wrong translation language).
+        guard !associatedEntries.isEmpty else { return [] }
 
-    // translations that could not be enhanced further, but never endet up being of the desired language are removed
-    let validPairs = enhancedPairs.filter { (_, translation) in
-      translation.language == destination
+        // Gets all the `Expression`s that `pair.translation` translates to from
+        // the `associatedEntries`.
+        let associatedExpressions = associatedEntries.map {
+          entry -> [Expression] in
+          if entry.title == pair.translation {
+            return Array(entry.translations)
+          } else {
+            return [entry.title]
+          }
+          }
+          .flatMap { $0 }
+
+        // Creates and returns the `ProcessingPair`s, while using the
+        // `associatedExpressions` as `translation` values.
+        return associatedExpressions.map {
+          let isFullyProcessed = $0.language == destination
+          let usedEntries = pair.usedEntries.union(associatedEntries)
+          return (pair.title, $0, isFullyProcessed, usedEntries)
+        }
+        }
+        .flatMap { $0 }
     }
 
+    // Maps the `processingPairs` back to normal `Expression` pairs.
+    let processedPairs = processingPairs.map { ($0.title, $0.translation) }
+
+    /*ENHANCE-THIS-ALGORITHM-BEGIN*/
     var expressionStructurePairs = [(Expression, Synoset)]()
 
-    for pair in validPairs {
+    for pair in processedPairs {
       if let index = (expressionStructurePairs.index { (title, _) in title == pair.0 }) {
         expressionStructurePairs[index].1.insert(pair.1)
       } else {
         expressionStructurePairs.append((pair.0, Synoset(expression: pair.1)))
       }
     }
+    /*ENHANCE-THIS-ALGORITHM-END*/
 
-    let enhancedEntries = expressionStructurePairs.map { (expression, synoset) -> Entry in
-      Entry(title: expression, translations: synoset)
+    let processedEntries = expressionStructurePairs.map {
+      (expression, synoset) in Entry(title: expression, translations: synoset)
     }
 
-    let finalResult = completeEntries + enhancedEntries
-
-    return ["completeEntries": completeEntries,
-            "incompleteEntries": incompleteEntries,
-            "expressionPairs": expressionsPairs,
-            "enhancedPairs": enhancedPairs,
-            "expressionStructurePairs": expressionStructurePairs,
-            "enhancedEntries": enhancedEntries,
-            "finalResult": finalResult]
+    return (completeEntries + processedEntries).sorted()
   }
 }

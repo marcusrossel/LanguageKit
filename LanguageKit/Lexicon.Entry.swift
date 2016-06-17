@@ -34,16 +34,8 @@ extension Lexicon {
       return (title.language, translations.language)
     }
 
-
-    internal func containsAnyOf<
-      S: Sequence where S.Iterator.Element == Expression
-      >(_ expressions: S) -> Bool {
-      for expression in expressions {
-        if title == expression || translations.contains(expression) {
-          return true
-        }
-      }
-      return false
+    internal func contains(_ expression: Expression) -> Bool {
+      return title == expression || translations.contains(expression)
     }
     /*LEXICON-TEST-CODE-END*/
 
@@ -115,15 +107,12 @@ extension Lexicon.Entry : Equatable { }
 /// are equal.
 public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
   return lhs.title        == rhs.title &&
-    lhs.translations == rhs.translations
+         lhs.translations == rhs.translations
 }
 
 extension Lexicon.Entry : Hashable {
   public var hashValue: Int {
-    let strings = [title.text] + translations.map { expression -> String in
-      return title.text
-    }
-
+    let strings = [title.text] + translations.map { $0.text }
     return "\(strings)".hashValue
   }
 }
