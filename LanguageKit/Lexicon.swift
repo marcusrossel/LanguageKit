@@ -2,88 +2,139 @@
 //  Lexicon.swift
 //  LanguageKit
 //
-//  Created by Marcus Rossel on 20.03.16.
+//  Created by Marcus Rossel on 07.06.16.
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-/// A native *LanguageKit* type which allows types conforming to `VocableType`
-/// to be used collectively.
-///
-/// An `Lexion` contains a set of vocables - some type confroming to
-/// `VocableType` - which are unique in their meaning. Each vocable is defined
-/// by the meaning of the *word/phrase/etc.* that it contains, not by the
-/// language it represents.
-/// When a connection can be made between vocables, they are merged into one,
-/// therefore bundeling words/phrases/etc. of the same meaning into one vocable.
-/// The result of inserting information into the lexicon, might therefore an
-/// increase in size of certain vocables, not an increase in the number of
-/// vocables.
-public struct Lexicon<V: VocableType where V: Hashable> {
-    private var _storage: Set<V> = []
+public struct Lexicon {
+  private var storage = Set<Entry>()
 
-    public mutating func insert(vocable vocable: V) {
-        // insert... merge ... etc.
+  public init(entries: [Entry]) {
+    storage = Set(entries)
+  }
+
+  /// Acts like `filter` on `set`, but returns the included elements and removes
+  /// them from `set`.
+  private func carvingOff(of set: inout Set<Entry>, condition: (Entry) -> Bool) -> Set<Entry> {
+    let returnValue = Set(set.filter(condition))
+    set.subtract(returnValue)
+    return returnValue
+  }
+
+  public func entries(origin: Language, destination: Language) -> [Entry] {
+    var remainingEntries = storage
+
+    // Gets all `Entry`s that can be returned as is.
+    let completeEntries1 = carvingOff(of: &remainingEntries) {
+      $0.languages == (origin, destination)
     }
 
-    public mutating func remove(vocable vocable: V) {
-        // either (1) or (2)
-     
-        // (1)
-        // remove every component of `vocable` from `_storage` (not required to
-        // be a strikt subset)
-     
-        // (2)
-        // figure out if vocable is subset of other vocable. it it's a strickt
-        // subvocable... remove it from supervocable
-        // if it's not a strict subvocable. dont remove it
+    // Gets all `Entry`s that contain the desired languages but flipped, and
+    // flipps them.
+    let completeEntries2 = carvingOff(of: &remainingEntries) {
+      $0.languages == (destination, origin)
+      }
+      .map { $0.flipped() }
+      .flatMap { $0 }
+
+    // Combines the `Entry`s that are returnable as is.
+    let completeEntries = completeEntries1 + completeEntries2
+
+    // Gets all the `Entry`s, whose `title`s are in the language of `origin`
+    // (the `translations`' language can't be `destination`, as those `Entry`s
+    // have been carved off before).
+    let incompleteEntries1 = carvingOff(of: &remainingEntries) {
+      $0.title.language == origin
     }
 
-    public mutating func insert(translation translation: AnyTranslation, style: AnyVocableStyle) {
-        let vocable = V(style: style, translation: translation)
-        insert(vocable: vocable)
-    }
+    // Gets all the `Entry`s, whose `translations` are in the language of
+    // `origin` (the `title`'s language can't be `destination`, as those
+    // `Entry`s have been carved off before).
+    let incompleteEntries2 = carvingOff(of: &remainingEntries) {
+      $0.translations.language == origin
+      }
+      .map { $0.flipped() }
+      .flatMap { $0 }
 
-    public mutating func remove(translation translation: AnyTranslation, style: AnyVocableStyle) {
-        // same as with `removeVocable`. if the translation is not a strickt
-        // subset... nothing happens
-    }
+    // Combines the `Entry`s that are not completely processed yet.
+    let incompleteEntries = incompleteEntries1 + incompleteEntries2
 
-    /// Default parameters do not seem to be allowed for subscripts yet.
-    /// To ignore the `vocableStyle`, it should therefore be passed a value of
-    /// `nil`.
-    public subscript(originalLanguage oLang: AnyLanguage, derivedLanguage dLang: AnyLanguage, vocableStyle vStyle: AnyVocableStyle?) -> Set<AnyTranslation> {
-        let vocablePool: [V]
+    // A `ProcessingPair` is a pair of `Expression`s with some meta-data.
+    typealias ProcessingPair = (title: Expression,
+      translation: Expression,
+      isFullyProcessed: Bool,
+      usedEntries: Set<Entry>)
 
-        if let style = vStyle {
-            vocablePool = _storage.filter { vocable in vocable.style == style }
-        } else {
-            vocablePool = Array(_storage)
+    // Split every `Entry` in `incompleteEntries` into pairs of `Expression`s.
+    // Therefore one `Entry` produces as many pairs as it has `translations`.
+    // The additional fields in the tuple will be used in following code.
+    var processingPairs: [ProcessingPair] = incompleteEntries
+      .map { entry in entry.translations.map { (entry.title, $0, false, []) } }
+      .flatMap { $0 }
+
+    // Processes each pair in `processingPairs` until each one
+    // `isFullyProcessed`, while removing those, which will never be fully
+    // processed.
+    while processingPairs.contains({ !$0.isFullyProcessed }) {
+      processingPairs = processingPairs.map { pair -> [ProcessingPair] in
+        // Returns every `pair` that `isFullyProcessed` as is.
+        guard !pair.isFullyProcessed else { return [pair] }
+
+        // Gets all `remainingEntries` that contain the `pair`'s `translation`
+        // and have not been associated/used with this `pair` before.
+        let associatedEntries = remainingEntries.filter {
+          !pair.usedEntries.contains($0) && $0.contains(pair.translation)
         }
 
-        let translations = vocablePool.map { vocable in
-            return vocable[oLang, dLang]
+        // Removes `pair`s that will never be fully processed (branches by which
+        // the `destination` language never will be reached).
+        //
+        // Alternative: [(pair.title, pair.translation, true, pair.usedEntries)]
+        // ... with later filtering of those pairs (wrong translation language).
+        guard !associatedEntries.isEmpty else { return [] }
+
+        // Gets all the `Expression`s that `pair.translation` translates to from
+        // the `associatedEntries`.
+        let associatedExpressions = associatedEntries.map {
+          entry -> [Expression] in
+          if entry.title == pair.translation {
+            return Array(entry.translations)
+          } else {
+            return [entry.title]
+          }
+          }
+          .flatMap { $0 }
+
+        // Creates and returns the `ProcessingPair`s, while using the
+        // `associatedExpressions` as `translation` values.
+        return associatedExpressions.map {
+          let isFullyProcessed = $0.language == destination
+          let usedEntries = pair.usedEntries.union(associatedEntries)
+          return (pair.title, $0, isFullyProcessed, usedEntries)
         }
-        .flatten()
-
-        return Set(translations)
+        }
+        .flatMap { $0 }
     }
 
-    public init<S: SequenceType where S.Generator.Element == V>(vocables: S) {
-        _storage = Set(vocables)
+    // Maps the `processingPairs` back to normal `Expression` pairs.
+    let processedPairs = processingPairs.map { ($0.title, $0.translation) }
+
+    /*ENHANCE-THIS-ALGORITHM-BEGIN*/
+    var expressionStructurePairs = [(Expression, Synoset)]()
+
+    for pair in processedPairs {
+      if let index = (expressionStructurePairs.index { (title, _) in title == pair.0 }) {
+        expressionStructurePairs[index].1.insert(pair.1)
+      } else {
+        expressionStructurePairs.append((pair.0, Synoset(expression: pair.1)))
+      }
     }
-}
+    /*ENHANCE-THIS-ALGORITHM-END*/
 
-extension Lexicon: ArrayLiteralConvertible {
-    public init(arrayLiteral elements: V...) {
-        self.init(vocables: elements)
+    let processedEntries = expressionStructurePairs.map {
+      (expression, synoset) in Entry(title: expression, translations: synoset)
     }
-}
 
-extension Lexicon: Hashable {
-    public var hashValue: Int { return _storage.hashValue }
-}
-
-@warn_unused_result
-public func ==<T>(lhs: Lexicon<T>, rhs: Lexicon<T>) -> Bool {
-    return lhs._storage == rhs._storage
+    return (completeEntries + processedEntries).sorted()
+  }
 }
