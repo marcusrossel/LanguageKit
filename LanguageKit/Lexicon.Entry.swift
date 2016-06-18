@@ -69,6 +69,7 @@ extension Lexicon {
     /// - Note:
     /// Insertion will only be successful if the `expression`'s language equals
     /// the `translations`' language.
+    @discardableResult
     public mutating func insert(expression: Expression) -> Bool {
       return translations.insert(expression)
     }

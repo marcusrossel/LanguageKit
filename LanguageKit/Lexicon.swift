@@ -120,20 +120,16 @@ public struct Lexicon {
     let processedPairs = processingPairs.map { ($0.title, $0.translation) }
 
     /*ENHANCE-THIS-ALGORITHM-BEGIN*/
-    var expressionStructurePairs = [(Expression, Synoset)]()
+    var processedEntries = [Entry]()
 
     for pair in processedPairs {
-      if let index = (expressionStructurePairs.index { (title, _) in title == pair.0 }) {
-        expressionStructurePairs[index].1.insert(pair.1)
+      if let index = (processedEntries.index {  $0.title == pair.0 }) {
+        processedEntries[index].insert(expression: pair.1)
       } else {
-        expressionStructurePairs.append((pair.0, Synoset(expression: pair.1)))
+        processedEntries.append(Entry(title: pair.0, translations: Synoset(expression: pair.1)))
       }
     }
     /*ENHANCE-THIS-ALGORITHM-END*/
-
-    let processedEntries = expressionStructurePairs.map {
-      (expression, synoset) in Entry(title: expression, translations: synoset)
-    }
 
     return (completeEntries + processedEntries).sorted()
   }
