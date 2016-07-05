@@ -98,7 +98,7 @@ extension Lexicon {
 public func +=<S: Sequence where S.Iterator.Element == Expression>(
   entry: inout Lexicon.Entry,
   expressions: S
-  ) {
+) {
   // Optimization is performed by the `+=` operator.
   entry.translations += expressions
 }

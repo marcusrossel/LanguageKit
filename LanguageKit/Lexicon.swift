@@ -6,33 +6,49 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
+// A structure that holds a set of `Entry`s and gives means of working with them
+// efficiently.
 public struct Lexicon {
   private var storage = Set<Entry>()
 
-  public init(entries: [Entry]) {
-    storage = Set(entries)
-  }
-
   /// Acts like `filter` on `set`, but returns the included elements and removes
   /// them from `set`.
-  private func carvingOff(of set: inout Set<Entry>, condition: (Entry) -> Bool) -> Set<Entry> {
-    let returnValue = Set(set.filter(condition))
+  ///
+  /// - Parameters:
+  ///   - set: The set of `Entry`s off of which some `Entry`s are carved.
+  ///   - carveEntry: Indicates if an `Entry` should be carved off of `set`.
+  ///
+  /// - Returns:
+  /// A set of `Entry`s which met the condition to `carveEntry`.
+  private func carvingOff(of set: inout Set<Entry>, carveEntry: (Entry) -> Bool)
+  -> Set<Entry> {
+    let returnValue = Set(set.filter(carveEntry))
     set.subtract(returnValue)
     return returnValue
   }
 
-  public func entries(origin: Language, destination: Language) -> [Entry] {
+  /// Returns all entries constructable that are of the given languages.
+  /// These entries are in part taken as is from the `Lexicon`'s storage, the
+  /// rest is constructed by connecting expressions of equal meaning across
+  /// languages.
+  ///
+  /// - Returns:
+  /// A sorted array of unique `Entry`s, whose `languages` are the given ones.
+  public func entries(
+    title titleLanguage: Language,
+    translations translationsLanguage: Language
+  ) -> [Entry] {
     var remainingEntries = storage
 
     // Gets all `Entry`s that can be returned as is.
     let completeEntries1 = carvingOff(of: &remainingEntries) {
-      $0.languages == (origin, destination)
+      $0.languages == (titleLanguage, translationsLanguage)
     }
 
     // Gets all `Entry`s that contain the desired languages but flipped, and
     // flipps them.
     let completeEntries2 = carvingOff(of: &remainingEntries) {
-      $0.languages == (destination, origin)
+      $0.languages == (translationsLanguage, titleLanguage)
       }
       .map { $0.flipped() }
       .flatMap { $0 }
@@ -44,14 +60,14 @@ public struct Lexicon {
     // (the `translations`' language can't be `destination`, as those `Entry`s
     // have been carved off before).
     let incompleteEntries1 = carvingOff(of: &remainingEntries) {
-      $0.title.language == origin
+      $0.title.language == titleLanguage
     }
 
     // Gets all the `Entry`s, whose `translations` are in the language of
     // `origin` (the `title`'s language can't be `destination`, as those
     // `Entry`s have been carved off before).
     let incompleteEntries2 = carvingOff(of: &remainingEntries) {
-      $0.translations.language == origin
+      $0.translations.language == titleLanguage
       }
       .map { $0.flipped() }
       .flatMap { $0 }
@@ -108,7 +124,7 @@ public struct Lexicon {
         // Creates and returns the `ProcessingPair`s, while using the
         // `associatedExpressions` as `translation` values.
         return associatedExpressions.map {
-          let isFullyProcessed = $0.language == destination
+          let isFullyProcessed = $0.language == translationsLanguage
           let usedEntries = pair.usedEntries.union(associatedEntries)
           return (pair.title, $0, isFullyProcessed, usedEntries)
         }
@@ -132,5 +148,15 @@ public struct Lexicon {
     /*ENHANCE-THIS-ALGORITHM-END*/
 
     return (completeEntries + processedEntries).sorted()
+  }
+
+  public init() { }
+
+  public init(entry: Entry) {
+    storage = [entry]
+  }
+
+  public init(entries: [Entry]) {
+    storage = Set(entries)
   }
 }

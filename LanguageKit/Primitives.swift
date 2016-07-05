@@ -97,7 +97,7 @@ public struct Expression {
     in language: Language,
     group: Group,
     context: String? = nil
-    ) {
+  ) {
     // Precondition.
     guard !text.isEmpty else { return nil }
 
@@ -113,9 +113,9 @@ extension Expression : Equatable { }
 /// equal.
 public func ==(lhs: Expression, rhs: Expression) -> Bool {
   return lhs.text     == rhs.text     &&
-    lhs.group    == rhs.group    &&
-    lhs.language == rhs.language &&
-    lhs.context  == rhs.context
+         lhs.group    == rhs.group    &&
+         lhs.language == rhs.language &&
+         lhs.context  == rhs.context
 }
 
 extension Expression : Hashable {
@@ -143,7 +143,8 @@ public func <(lhs: Expression, rhs: Expression) -> Bool {
 /*LEXICON-TEST-CODE-BEGIN*/
 extension Expression : CustomStringConvertible {
   public var description: String {
-    return "<\(language) \(group) \"\(text)\">"
+    let contextString = context != nil ? ": \"\(context!)\"" : ""
+    return "<\(language) \(group) \"\(text)\"\(contextString)>"
   }
 }
 /*LEXICON-TEST-CODE-END*/

@@ -77,8 +77,7 @@ public struct Synoset {
     _ lhs: [Expression],
     _ rhs: [Expression],
     optimized: Bool = true
-    ) -> [Expression]
-  {
+  ) -> [Expression] {
     // Shortcuts on empty arrays if `optimized` is `true`.
     if optimized && (lhs.isEmpty || rhs.isEmpty) {
       return lhs.isEmpty ? rhs : lhs
@@ -202,7 +201,7 @@ public struct Synoset {
   public init<S: Sequence where S.Iterator.Element == Expression>(
     expressions: S,
     language: Language
-    ) {
+  ) {
     self.init(language: language)
     synonyms = expressions.filter { $0.language == language }.sorted()
   }
@@ -231,7 +230,7 @@ public struct Synoset {
 public func +=<S: Sequence where S.Iterator.Element == Expression>(
   synoset: inout Synoset,
   expressions: S
-  ) {
+) {
   // Differentiates between several cases of certain arrays being empty, or
   // the passed sequence being of type `Synoset`, etc. for efficiency.
   switch (expressions as? Synoset, synoset.synonyms.isEmpty) {
@@ -264,7 +263,7 @@ extension Synoset : Equatable { }
 /// The 'language' property doesn't have to be considered, but is used as a
 /// possible shortcut for determining inequality.
 public func ==(lhs: Synoset, rhs: Synoset) -> Bool {
-  return lhs.language == rhs.language &&  lhs.synonyms == rhs.synonyms
+  return lhs.language == rhs.language && lhs.synonyms == rhs.synonyms
 }
 
 extension Synoset : Collection {
