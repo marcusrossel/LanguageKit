@@ -32,10 +32,11 @@ public struct Language {
   }
 }
 
-extension Language : Equatable { }
-/// `Language`s are considered equal iff their `title`s are equal.
-public func ==(lhs: Language, rhs: Language) -> Bool {
-  return lhs.title == rhs.title
+extension Language : Equatable {
+  /// `Language`s are considered equal iff their `title`s are equal.
+  public static func ==(lhs: Language, rhs: Language) -> Bool {
+    return lhs.title == rhs.title
+  }
 }
 
 extension Language : Hashable {
@@ -44,10 +45,11 @@ extension Language : Hashable {
   }
 }
 
-extension Language : Comparable { }
-/// `Language`s compare by their `title`.
-public func <(lhs: Language, rhs: Language) -> Bool {
-  return lhs.title < rhs.title
+extension Language : Comparable {
+  /// `Language`s compare by their `title`.
+  public static func <(lhs: Language, rhs: Language) -> Bool {
+    return lhs.title < rhs.title
+  }
 }
 
 /*LEXICON-TEST-CODE-BEGIN*/
@@ -108,14 +110,15 @@ public struct Expression {
   }
 }
 
-extension Expression : Equatable { }
-/// `Expression`s are considered equal iff all of their stored properties are
-/// equal.
-public func ==(lhs: Expression, rhs: Expression) -> Bool {
-  return lhs.text     == rhs.text     &&
-         lhs.group    == rhs.group    &&
-         lhs.language == rhs.language &&
-         lhs.context  == rhs.context
+extension Expression : Equatable {
+  /// `Expression`s are considered equal iff all of their stored properties are
+  /// equal.
+  public static func ==(lhs: Expression, rhs: Expression) -> Bool {
+    return lhs.text     == rhs.text     &&
+           lhs.group    == rhs.group    &&
+           lhs.language == rhs.language &&
+           lhs.context  == rhs.context
+  }
 }
 
 extension Expression : Hashable {
@@ -125,18 +128,19 @@ extension Expression : Hashable {
   }
 }
 
-extension Expression : Comparable { }
-/// `Expression`s are compared on three levels:
-/// * If the `text`s differ, they will be compared.
-/// * If the `text`s do not differ, the `language`s will be compared.
-/// * If the `language`s do not differ either, the `group`s will be compared.
-public func <(lhs: Expression, rhs: Expression) -> Bool {
-  if lhs.text != rhs.text {
-    return lhs.text < rhs.text
-  } else if lhs.language != rhs.language {
-    return lhs.language < rhs.language
-  } else {
-    return lhs.group < rhs.group
+extension Expression : Comparable {
+  /// `Expression`s are compared on three levels:
+  /// * If the `text`s differ, they will be compared.
+  /// * If the `text`s do not differ, the `language`s will be compared.
+  /// * If the `language`s do not differ either, the `group`s will be compared.
+  public static func <(lhs: Expression, rhs: Expression) -> Bool {
+    if lhs.text != rhs.text {
+      return lhs.text < rhs.text
+    } else if lhs.language != rhs.language {
+      return lhs.language < rhs.language
+    } else {
+      return lhs.group < rhs.group
+    }
   }
 }
 
@@ -174,10 +178,11 @@ extension Expression {
   }
 }
 
-extension Expression.Group : Equatable { }
-/// `Expression.Group`s are considered equal iff their `title`s are equal.
-public func ==(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
-  return lhs.title == rhs.title
+extension Expression.Group : Equatable {
+  /// `Expression.Group`s are considered equal iff their `title`s are equal.
+  public static func ==(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
+    return lhs.title == rhs.title
+  }
 }
 
 extension Expression.Group : Hashable {
@@ -186,10 +191,11 @@ extension Expression.Group : Hashable {
   }
 }
 
-extension Expression.Group : Comparable { }
-/// `Expression.Group`s compare by their `title`.
-public func <(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
-  return lhs.title < rhs.title
+extension Expression.Group : Comparable {
+  /// `Expression.Group`s compare by their `title`.
+  public static func <(lhs: Expression.Group, rhs: Expression.Group) -> Bool {
+    return lhs.title < rhs.title
+  }
 }
 
 /*LEXICON-TEST-CODE-BEGIN*/

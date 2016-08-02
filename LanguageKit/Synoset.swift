@@ -13,7 +13,7 @@ public struct Synoset {
   ///
   /// - Note:
   /// Although an `Array` is used, all `Expressions` are unique.
-  public private(set) var synonyms = [Expression]()
+  public fileprivate(set) var synonyms = [Expression]()
 
   /// The `Language` of the `Expressions` in `self`.
   public let language: Language
@@ -90,10 +90,15 @@ public struct Synoset {
     var returnArray = [Expression]()
 
     while !left.isEmpty && !right.isEmpty {
-      if left.first == right.first {
+      // Force-unwrapping is safe, as `left` and `right` have just been checked
+      // not to be empty, and therefore have a `first` element.
+      let firstOfLeft = left.first!
+      let firstOfRight = right.first!
+
+      if firstOfLeft == firstOfRight {
         // Removes duplicates.
         left.removeFirst()
-      } else if left.first < right.first {
+      } else if firstOfLeft < firstOfRight {
         returnArray.append(left.removeFirst())
       } else {
         returnArray.append(right.removeFirst())
@@ -198,10 +203,9 @@ public struct Synoset {
 
   /// Discardes all `Expression`s in `expressions`, that are not of the given
   /// `language`.
-  public init<S: Sequence where S.Iterator.Element == Expression>(
-    expressions: S,
-    language: Language
-  ) {
+  public init<S: Sequence>(expressions: S, language: Language) where
+    S.Iterator.Element == Expression
+  {
     self.init(language: language)
     synonyms = expressions.filter { $0.language == language }.sorted()
   }
@@ -212,9 +216,9 @@ public struct Synoset {
   /// - Note:
   /// Based on the assumption that all `Expression`s are of the same language,
   /// this removes the need to explicitly supply the language.
-  public init!<S: Sequence where S.Iterator.Element == Expression>(
-    expressions: S
-    ) {
+  public init!<S: Sequence>(expressions: S) where
+    S.Iterator.Element == Expression
+  {
     guard let firstExpression = Array(expressions).first else { return nil }
     self.init(expressions: expressions, language: firstExpression.language)
   }
@@ -227,10 +231,9 @@ public struct Synoset {
 /// This function is optimized for the case that either parameter's sequence is
 /// empty, that the languages do not match, and that `expression` is of type
 /// `Synoset`.
-public func +=<S: Sequence where S.Iterator.Element == Expression>(
-  synoset: inout Synoset,
-  expressions: S
-) {
+public func +=<S: Sequence>(synoset: inout Synoset, expressions: S) where
+  S.Iterator.Element == Expression
+{
   // Differentiates between several cases of certain arrays being empty, or
   // the passed sequence being of type `Synoset`, etc. for efficiency.
   switch (expressions as? Synoset, synoset.synonyms.isEmpty) {
@@ -256,14 +259,15 @@ public func +=<S: Sequence where S.Iterator.Element == Expression>(
   }
 }
 
-extension Synoset : Equatable { }
-/// `Synoset`s are considered equal iff their `synonyms` are equal.
-///
-/// - Note:
-/// The 'language' property doesn't have to be considered, but is used as a
-/// possible shortcut for determining inequality.
-public func ==(lhs: Synoset, rhs: Synoset) -> Bool {
-  return lhs.language == rhs.language && lhs.synonyms == rhs.synonyms
+extension Synoset : Equatable {
+  /// `Synoset`s are considered equal iff their `synonyms` are equal.
+  ///
+  /// - Note:
+  /// The 'language' property doesn't have to be considered, but is used as a
+  /// possible shortcut for determining inequality.
+  public static func ==(lhs: Synoset, rhs: Synoset) -> Bool {
+    return lhs.language == rhs.language && lhs.synonyms == rhs.synonyms
+  }
 }
 
 extension Synoset : Collection {

@@ -27,7 +27,7 @@ extension Lexicon {
   /// viable, as these properties can never change their `Language` once set.
   public struct Entry {
     public let title: Expression
-    public private(set) var translations: Synoset
+    public fileprivate(set) var translations: Synoset
 
     /*LEXICON-TEST-CODE-BEGIN*/
     internal var languages: (Language, Language) {
@@ -95,20 +95,20 @@ extension Lexicon {
 /// This function is optimized for the case that either parameter's sequence is
 /// empty, that the languages do not match, and that `expression` is of type
 /// `Synoset`.
-public func +=<S: Sequence where S.Iterator.Element == Expression>(
-  entry: inout Lexicon.Entry,
-  expressions: S
-) {
+public func +=<S: Sequence>(entry: inout Lexicon.Entry, expressions: S) where
+  S.Iterator.Element == Expression
+{
   // Optimization is performed by the `+=` operator.
   entry.translations += expressions
 }
 
-extension Lexicon.Entry : Equatable { }
-/// `Lexicon.Entry`s are considered equal iff all of their stored properties
-/// are equal.
-public func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-  return lhs.title        == rhs.title &&
-         lhs.translations == rhs.translations
+extension Lexicon.Entry : Equatable {
+  /// `Lexicon.Entry`s are considered equal iff all of their stored properties
+  /// are equal.
+  public static func ==(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
+    return lhs.title        == rhs.title &&
+      lhs.translations == rhs.translations
+  }
 }
 
 extension Lexicon.Entry : Hashable {
@@ -118,10 +118,11 @@ extension Lexicon.Entry : Hashable {
   }
 }
 
-extension Lexicon.Entry : Comparable { }
-/// `Lexicon.Entry`s are compared by their `title` property.
-public func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
-  return lhs.title < rhs.title
+extension Lexicon.Entry : Comparable {
+  /// `Lexicon.Entry`s are compared by their `title` property.
+  public static func <(lhs: Lexicon.Entry, rhs: Lexicon.Entry) -> Bool {
+    return lhs.title < rhs.title
+  }
 }
 
 /*LEXICON-TEST-CODE-BEGIN*/

@@ -91,7 +91,7 @@ public struct Lexicon {
     // Processes each pair in `processingPairs` until each one
     // `isFullyProcessed`, while removing those, which will never be fully
     // processed.
-    while processingPairs.contains({ !$0.isFullyProcessed }) {
+    while processingPairs.contains(where: { !$0.isFullyProcessed }) {
       processingPairs = processingPairs.map { pair -> [ProcessingPair] in
         // Returns every `pair` that `isFullyProcessed` as is.
         guard !pair.isFullyProcessed else { return [pair] }
@@ -142,7 +142,9 @@ public struct Lexicon {
       if let index = (processedEntries.index {  $0.title == pair.0 }) {
         processedEntries[index].insert(expression: pair.1)
       } else {
-        processedEntries.append(Entry(title: pair.0, translations: Synoset(expression: pair.1)))
+        let translations = Synoset(expression: pair.1)
+        let entry = Entry(title: pair.0, translations: translations)
+        processedEntries.append(entry)
       }
     }
     /*ENHANCE-THIS-ALGORITHM-END*/

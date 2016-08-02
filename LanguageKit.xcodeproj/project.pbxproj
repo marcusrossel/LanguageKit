@@ -395,6 +395,7 @@
 				DD04038B1D15A034003278E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DD8CFD0D1C9F6B7D005F0C30 /* Build configuration list for PBXProject "LanguageKit" */ = {
 			isa = XCConfigurationList;
