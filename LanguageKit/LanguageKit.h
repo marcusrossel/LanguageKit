@@ -6,7 +6,7 @@
 //  Copyright © 2016 Marcus Rossel. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for LanguageKit.
 FOUNDATION_EXPORT double LanguageKitVersionNumber;
@@ -16,5 +16,3 @@ FOUNDATION_EXPORT const unsigned char LanguageKitVersionString[];
 
 // In this header, you should import all the public headers of your framework
 // using statements like #import <LanguageKit/PublicHeader.h>
-
-
